@@ -7,8 +7,8 @@ in
 {
   nixpkgs.config.allowUnfree = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  system.autoUpgrade.enable = true;
 
   services.openssh.enable = true;
   users.users.root.openssh.authorizedKeys.keys = keys;
 }
-

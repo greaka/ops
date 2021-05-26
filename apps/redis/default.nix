@@ -1,0 +1,4 @@
+{ ... }:
+{
+    services.redis.enable = true;
+}

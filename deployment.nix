@@ -9,11 +9,12 @@ in
         imports = [ ./common.nix ];
     };
 
-    cpx21n1 =
+    kenma =
     { resources, ... }:
     {
         imports = [
-        ./hetzner.nix
+        ./hetzner
+        ./apps/wvwbot
         ];
 
         hetzner = {
@@ -23,6 +24,18 @@ in
         };
 
         networking.hostId = "a7344d84";
+
+        deployment.keys."wvwbot-config.json" = {
+            text = secrets."wvwbot-config.json";
+            user = "wvwbot";
+            permissions = "0400";
+        };
+
+        deployment.keys."acme-cloudflare" = {
+            text = secrets."acme-cloudflare";
+            group = "acme";
+            permissions = "0440";
+        };
     };
 }
 
