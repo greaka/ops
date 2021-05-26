@@ -23,6 +23,8 @@ in
       };
     };
 
+    networking.firewall.allowedTCPPorts = [ 80 443 ];
+
     environment.etc.wvwbot = {
         source = "/run/keys/${secret}";
         target = "wvwbot/config.json";
