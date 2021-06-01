@@ -13,7 +13,7 @@ in
     systemd.services.wvwbot = {
       description = "wvwbot";
       wantedBy = ["multi-user.target"];
-      after = ["network-online.target"];
+      after = ["network-online.target" "redis.service" "${secret}-key.service"];
       wants = ["redis.service" "${secret}-key.service"];
       serviceConfig = {
         User = "root";
