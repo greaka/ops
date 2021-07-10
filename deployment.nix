@@ -15,7 +15,7 @@ in
         imports = [
         ./hetzner
         ./apps/wvwbot
-        ./apps/terraria
+        ./apps/plik
         ];
 
         hetzner = {
