@@ -8,7 +8,10 @@ in
     ../acme
     ];
 
-    users.users.wvwbot.isSystemUser = true;
+    users.users.wvwbot = {
+        isSystemUser = true;
+        extraGroups = ["acme"];
+    };
 
     systemd.services.wvwbot = {
       description = "wvwbot";
@@ -16,7 +19,7 @@ in
       after = ["network-online.target" "redis.service" "${secret}-key.service"];
       wants = ["redis.service" "${secret}-key.service"];
       serviceConfig = {
-        User = "root";
+        User = "wvwbot";
         Restart = "always";
         WorkingDirectory = "/etc/wvwbot";
         ExecStart = "${pkgs.wvwbot}/bin/discordwvwbot";
@@ -24,7 +27,11 @@ in
       };
     };
 
-    networking.firewall.allowedTCPPorts = [ 80 443 ];
+    services.nginx.virtualHosts."wvwbot.greaka.de" = {
+        forceSSL = true;
+        locations."/".proxyPass = "http://localhost:4040";
+        useACMEHost = "greaka.de";
+    };
 
     environment.etc.wvwbot = {
         source = "/run/keys/${secret}";

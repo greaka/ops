@@ -14,8 +14,9 @@ in
     {
         imports = [
         ./hetzner
+        ./apps/nginx
         ./apps/wvwbot
-        ./apps/plik
+        ./apps/plikd
         ];
 
         hetzner = {

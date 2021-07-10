@@ -13,7 +13,8 @@
 		enable = true;
 		openFirewall = true;
 		settings = {
-			Listenaddress = "0.0.0.0";
+			ListenAddress = "0.0.0.0";
+			ListenPort = 8080;
 			SslEnabled = true;
 			SslCert = "/var/lib/acme/greaka.de/fullchain.pem";
 			SslKey = "/var/lib/acme/greaka.de/key.pem";
@@ -22,5 +23,11 @@
 			Authentication = true;
 			NoAnonymousUploads = true;
 		};
+	};
+
+	services.nginx.virtualHosts."dl.greaka.de" = {
+		forceSSL = true;
+		locations."/".proxyPass = "https://localhost:" ++ services.plikd.settings.ListenPort;
+        useACMEHost = "greaka.de";
 	};
 }
