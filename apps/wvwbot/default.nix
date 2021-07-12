@@ -27,6 +27,8 @@ in
       };
     };
 
+    alerts = ["wvwbot"];
+
     services.nginx.virtualHosts."wvwbot.greaka.de" = {
         forceSSL = true;
         locations."/".proxyPass = "http://localhost:4040";

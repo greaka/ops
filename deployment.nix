@@ -14,6 +14,8 @@ in
     {
         imports = [
         ./hetzner
+        ./apps/alerting
+        
         ./apps/nginx
         ./apps/wvwbot
         ./apps/plikd
@@ -37,6 +39,12 @@ in
             text = secrets."acme-cloudflare";
             group = "acme";
             permissions = "0440";
+        };
+
+        deployment.keys."telegram-alerts-token" = {
+            text = secrets."telegram-alerts-token";
+            user = "alert-telegram";
+            permissions = "0400";
         };
     };
 }

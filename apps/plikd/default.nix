@@ -30,4 +30,6 @@
 		locations."/".proxyPass = "https://localhost:${toString config.services.plikd.settings.ListenPort}";
         useACMEHost = "greaka.de";
 	};
+
+	alerts = ["plikd"];
 }

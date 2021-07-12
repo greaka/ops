@@ -12,4 +12,6 @@
 #		worldPath = "/var/lib/terraria/.local/share/Terraria/Worlds/Ani_+_Belst.wld";
 		worldPath = "/var/lib/terraria/.local/share/Terraria/Worlds/Schmeckers.wld";
 	};
+
+	alerts = ["terraria"];
 }
