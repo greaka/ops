@@ -1,2 +1,5 @@
-{ config, ... }:
-builtins.listToAttrs (builtins.map (service: { systemd.services.${service}.onFailure = ["alert-telegram@%n"]; }) config.alerts)
+{ lib, config, ... }: {
+  systemd.services = lib.genAttrs config.alerts (name: {
+    onFailure = [ "alert-telegram@%n" ];
+  });
+}
