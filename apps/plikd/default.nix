@@ -19,9 +19,10 @@
 			SslCert = "/var/lib/acme/greaka.de/fullchain.pem";
 			SslKey = "/var/lib/acme/greaka.de/key.pem";
 			DownloadDomain = "https://dl.greaka.de";
-			EnhancedWebSecurity = true;
+			EnhancedWebSecurity = false;
 			Authentication = true;
 			NoAnonymousUploads = true;
+			maxTTL = 315576000;
 		};
 	};
 
@@ -30,6 +31,8 @@
 		locations."/".proxyPass = "https://localhost:${toString config.services.plikd.settings.ListenPort}";
         useACMEHost = "greaka.de";
 	};
+
+	services.nginx.clientMaxBodySize = "1G";
 
 	alerts = ["plikd"];
 }

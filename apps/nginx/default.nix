@@ -1,5 +1,9 @@
 { ... }:
 {
+    imports = [
+        ./redirects.nix
+    ];
+
     users.users.nginx = {
         isSystemUser = true;
         extraGroups = ["acme"];
