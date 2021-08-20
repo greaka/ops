@@ -1,7 +1,7 @@
 { lib, ... }:
 with lib;
 let
-opt = mkOption { type = types.str; };
+  opt = mkOption { type = types.str; };
 in
 {
   options.hetzner = {

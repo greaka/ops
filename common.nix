@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-keys = lib.splitString "\n" (builtins.readFile (builtins.fetchurl "https://github.com/greaka.keys"));
+  keys = lib.splitString "\n" (builtins.readFile (builtins.fetchurl "https://github.com/greaka.keys"));
 in
 {
   nixpkgs.config.allowUnfree = true;
@@ -11,7 +11,7 @@ in
   services.openssh = {
     enable = true;
     passwordAuthentication = false;
-    ports = [32];
+    ports = [ 32 ];
   };
   users.users.root.openssh.authorizedKeys.keys = keys;
 }

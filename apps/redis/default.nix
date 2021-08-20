@@ -1,5 +1,5 @@
 { ... }:
 {
-    services.redis.enable = true;
-    alerts = ["redis"];
+  services.redis.enable = true;
+  alerts = [ "redis" ];
 }

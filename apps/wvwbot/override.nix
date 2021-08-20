@@ -3,7 +3,7 @@
 {
   config = {
     nixpkgs.config.packageOverrides = pkgs: {
-      wvwbot = pkgs.callPackage ./package.nix {};
+      wvwbot = pkgs.callPackage ./package.nix { };
     };
   };
 }

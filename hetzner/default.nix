@@ -1,11 +1,11 @@
 # things that are specific to the machine we're running on,
 # kind of like /etc/nixos/hardware-configuration.conf, but
 # with extra steps
-{ config, lib, ...}:
+{ config, lib, ... }:
 {
   imports = [
-  <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
-  ./options.nix
+    <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
+    ./options.nix
   ];
 
   boot = {
@@ -59,9 +59,9 @@
         prefixLength = 32;
       }];
 
-        ipv6.addresses = [{
-          address = config.hetzner.ipv6;
-          prefixLength = 64;
+      ipv6.addresses = [{
+        address = config.hetzner.ipv6;
+        prefixLength = 64;
       }];
     };
 
