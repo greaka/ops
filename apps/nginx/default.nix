@@ -1,8 +1,5 @@
-{ ... }:
-{
-  imports = [
-    ./redirects.nix
-  ];
+{ ... }: {
+  imports = [ ./redirects.nix ];
 
   users.users.nginx = {
     isSystemUser = true;

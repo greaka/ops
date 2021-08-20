@@ -1,8 +1,5 @@
-{ config, ... }:
-{
-  imports = [
-    ../acme
-  ];
+{ config, ... }: {
+  imports = [ ../acme ];
 
   users.users.plikd = {
     isSystemUser = true;
@@ -28,7 +25,8 @@
 
   services.nginx.virtualHosts."dl.greaka.de" = {
     forceSSL = true;
-    locations."/".proxyPass = "https://localhost:${toString config.services.plikd.settings.ListenPort}";
+    locations."/".proxyPass =
+      "https://localhost:${toString config.services.plikd.settings.ListenPort}";
     useACMEHost = "greaka.de";
   };
 

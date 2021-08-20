@@ -2,11 +2,7 @@
 let secret = "wvwbot-config.json";
 in
 {
-  imports = [
-    ./override.nix
-    ../redis
-    ../acme
-  ];
+  imports = [ ./override.nix ../redis ../acme ];
 
   users.users.wvwbot = {
     isSystemUser = true;

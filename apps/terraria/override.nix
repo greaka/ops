@@ -2,8 +2,14 @@
 with lib;
 let
   cfg = config.services.terraria;
-  worldSizeMap = { small = 1; medium = 2; large = 3; };
-  valFlag = name: val: optionalString (val != null) "-${name} \"${escape ["\\" "\""] (toString val)}\"";
+  worldSizeMap = {
+    small = 1;
+    medium = 2;
+    large = 3;
+  };
+  valFlag = name: val:
+    optionalString (val != null)
+      ''-${name} "${escape [ "\\" ''"'' ] (toString val)}"'';
   boolFlag = name: val: optionalString val "-${name}";
   flags = [
     (valFlag "port" cfg.port)
@@ -11,7 +17,8 @@ let
     (valFlag "password" cfg.password)
     (valFlag "motd" cfg.messageOfTheDay)
     (valFlag "world" cfg.worldPath)
-    (valFlag "autocreate" (builtins.getAttr cfg.autoCreatedWorldSize worldSizeMap))
+    (valFlag "autocreate"
+      (builtins.getAttr cfg.autoCreatedWorldSize worldSizeMap))
     (valFlag "banlist" cfg.banListPath)
     (boolFlag "secure" cfg.secure)
     (boolFlag "noupnp" cfg.noUPnP)

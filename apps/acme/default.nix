@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
   security.acme = {
     email = "acme@greaka.de";
     acceptTerms = true;

@@ -7,10 +7,7 @@ let
   '';
 in
 {
-  imports = [
-    ./options.nix
-    ./alerts.nix
-  ];
+  imports = [ ./options.nix ./alerts.nix ];
 
   users.users."alert-telegram" = {
     isSystemUser = true;

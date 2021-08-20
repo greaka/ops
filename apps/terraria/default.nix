@@ -1,9 +1,7 @@
 { ... }:
 
 {
-  imports = [
-    ./override.nix
-  ];
+  imports = [ ./override.nix ];
 
   services.terraria = {
     enable = true;

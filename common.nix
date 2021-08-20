@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 let
-  keys = lib.splitString "\n" (builtins.readFile (builtins.fetchurl "https://github.com/greaka.keys"));
+  keys = lib.splitString "\n"
+    (builtins.readFile (builtins.fetchurl "https://github.com/greaka.keys"));
 in
 {
   nixpkgs.config.allowUnfree = true;

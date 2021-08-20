@@ -1,12 +1,8 @@
 # things that are specific to the machine we're running on,
 # kind of like /etc/nixos/hardware-configuration.conf, but
 # with extra steps
-{ config, lib, ... }:
-{
-  imports = [
-    <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
-    ./options.nix
-  ];
+{ config, lib, ... }: {
+  imports = [ <nixpkgs/nixos/modules/profiles/qemu-guest.nix> ./options.nix ];
 
   boot = {
     loader = {

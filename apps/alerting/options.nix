@@ -1,6 +1,5 @@
 { lib, ... }:
-with lib;
-{
+with lib; {
   options.alerts = mkOption {
     default = [ ];
     type = types.listOf types.str;
