@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Greaka Stream</title>
+<style>
+    body {
+        margin: 0 auto;
+    }
+    #playerwrapper {
+        width: 100vw;
+        height: 100vh;
+    }
+</style>
+    </head>
+    <body>
+        <div id="playerwrapper">
+            <div id="player"></div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/ovenplayer/dist/ovenplayer.js"></script>
+
+    <script>
+        const player = OvenPlayer.create('player', {
+            sources: [
+                {
+                    label: 'High Quality Fluss',
+                    type: 'webrtc',
+                    file: 'wss://stream.greaka.de/ws'
+                }
+            ]
+        });
+    </script>
+    </body>
+</html>

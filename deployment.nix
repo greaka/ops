@@ -16,6 +16,7 @@ in
       ./apps/plikd
       # ./apps/terraria
       ./apps/factorio
+      ./apps/ovenmediaengine
     ];
 
     hetzner = {
