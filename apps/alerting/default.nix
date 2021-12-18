@@ -11,8 +11,10 @@ in
 
   users.users."alert-telegram" = {
     isSystemUser = true;
+    group = "alert-telegram";
     extraGroups = [ "keys" ];
   };
+  users.groups."alert-telegram" = {};
 
   systemd.services."alert-telegram@" = {
     description = "send a notification about failed systemd services";

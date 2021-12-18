@@ -6,8 +6,10 @@ in
 
   users.users.wvwbot = {
     isSystemUser = true;
+    group = "wvwbot";
     extraGroups = [ "acme" ];
   };
+  users.groups.wvwbot = {};
 
   systemd.services.wvwbot = {
     description = "wvwbot";

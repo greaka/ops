@@ -15,4 +15,10 @@ in
     ports = [ 32 ];
   };
   users.users.root.openssh.authorizedKeys.keys = keys;
+
+  # slim down the image
+  system.disableInstallerTools = true;
+  environment.defaultPackages = [];
+  boot.enableContainers = lib.mkDefault false;
+  documentation.enable = false;
 }

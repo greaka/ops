@@ -14,6 +14,8 @@ in
       ./apps/nginx
       ./apps/wvwbot
       ./apps/plikd
+      # ./apps/terraria
+      ./apps/factorio
     ];
 
     hetzner = {

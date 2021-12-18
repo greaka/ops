@@ -1,10 +1,15 @@
 { config, ... }: {
-  imports = [ ../acme ];
+  imports = [ 
+    ../acme
+    ./override.nix
+   ];
 
   users.users.plikd = {
     isSystemUser = true;
+    group = "plikd";
     extraGroups = [ "acme" ];
   };
+  users.groups.plikd = {};
 
   services.plikd = {
     enable = true;
@@ -16,6 +21,7 @@
       SslCert = "/var/lib/acme/greaka.de/fullchain.pem";
       SslKey = "/var/lib/acme/greaka.de/key.pem";
       DownloadDomain = "https://dl.greaka.de";
+      AbuseContact = "plikd@greaka.de";
       EnhancedWebSecurity = false;
       Authentication = true;
       NoAnonymousUploads = true;

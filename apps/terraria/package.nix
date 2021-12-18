@@ -7,12 +7,13 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url =
-      "https://terraria.org/system/dedicated_servers/archives/000/000/046/original/terraria-server-${urlVersion}.zip";
+      "https://terraria.org/api/download/pc-dedicated-server/terraria-server-${urlVersion}.zip";
     sha256 = "0qm4pbm1d9gax47fk4zhw9rcxvajxs36w7dghirli89i994r7g8j";
   };
 
   buildInputs = [ file ];
   nativeBuildInputs = [ autoPatchelfHook unzip ];
+  autoPatchelfIgnoreMissingDeps = true;
 
   installPhase = ''
     mkdir -p $out/bin

@@ -26,11 +26,13 @@ let
 in
 {
   config = {
-    # nixpkgs.config.packageOverrides = pkgs: {
-    #   terraria-server = pkgs.callPackage ./package.nix {};
-    # };
+    nixpkgs.config.packageOverrides = pkgs: {
+      terraria-server = pkgs.callPackage ./package.nix {};
+    };
 
     systemd.services.terraria.serviceConfig.User = mkForce "root";
+    users.users.terraria.group = "terraria";
+    users.groups.terraria = {};
 
     # users.users.terraria.extraGroups = ["tty"];
 

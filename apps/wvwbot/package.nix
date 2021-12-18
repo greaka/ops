@@ -2,7 +2,7 @@
 let
   source = builtins.fetchGit {
     url = "git@github.com:greaka/discordwvwbot.git";
-    ref = "e20334f398dc55f0eec4254a7a8b7007084d1b3c";
+    ref = "9aaf5af332df33c431f381bd7b12b656504590fc";
   };
 in
 buildGoPackage {
