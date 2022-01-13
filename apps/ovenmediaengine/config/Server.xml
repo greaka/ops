@@ -31,6 +31,10 @@
 				<Port>${env:OME_RTMP_PROV_PORT:1935}</Port>
 				<WorkerCount>1</WorkerCount>
 			</RTMP>
+			<SRT>
+				<Port>${env:OME_SRT_PROV_PORT:9999}</Port>
+				<WorkerCount>1</WorkerCount>
+			</SRT>
 		</Providers>
 
 		<Publishers>
@@ -38,8 +42,6 @@
 				<Signalling>
 					<Port>${env:OME_SIGNALLING_PORT:3333}</Port>
 					<WorkerCount>1</WorkerCount>
-					<!-- If you want to use TLS, specify the TLS port -->
-					<!-- <TLSPort>3334</TLSPort> -->
 				</Signalling>
 				<IceCandidates>
 					<TcpRelay>${env:OME_TCP_RELAY_ADDRESS:*:3478}</TcpRelay>
@@ -52,11 +54,6 @@
 	</Bind>
 
 	<VirtualHosts>
-		<!--
-			You can include multiple XML files by doing the following:
-			<VirtualHost include="sites-enabled/*.xml" />
-		-->
-		<VirtualHost include="VHost*.xml" />
 		<VirtualHost>
 			<Name>default</Name>
 			<!--Distribution is a value that can be used when grouping the same vhost distributed across multiple servers. This value is output to the events log, so you can use it to aggregate statistics. -->
@@ -65,35 +62,9 @@
 			<!-- Settings for multi ip/domain and TLS -->
 			<Host>
 				<Names>
-					<!-- Host names
-						<Name>stream1.airensoft.com</Name>
-						<Name>stream2.airensoft.com</Name>
-						<Name>*.sub.airensoft.com</Name>
-						<Name>192.168.0.1</Name>
-					-->
 					<Name>*</Name>
 				</Names>
-				<!--
-				<TLS>
-					<CertPath>path/to/file.crt</CertPath>
-					<KeyPath>path/to/file.key</KeyPath>
-					<ChainCertPath>path/to/file.crt</ChainCertPath>
-				</TLS>
-				-->
 			</Host>
-
-			<!-- Refer https://airensoft.gitbook.io/ovenmediaengine/signedpolicy
-			<SignedPolicy>
-				<PolicyQueryKeyName>policy</PolicyQueryKeyName>
-				<SignatureQueryKeyName>signature</SignatureQueryKeyName>
-				<SecretKey>aKq#1kj</SecretKey>
-
-				<Enables>
-					<Providers>rtmp,webrtc,srt</Providers>
-					<Publishers>webrtc,hls,dash,lldash</Publishers>
-				</Enables>
-			</SignedPolicy>
-			-->
 
 			<!-- Settings for applications -->
 			<Applications>
@@ -123,6 +94,7 @@
 					</OutputProfiles>
 					<Providers>
 						<RTMP />
+						<SRT />
 					</Providers>
 					<Publishers>
 						<AppWorkerCount>1</AppWorkerCount>

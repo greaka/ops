@@ -1,6 +1,7 @@
-{ ... }:
+{ pkgs, ... }:
 #let pkgs = import <nixos-master> { config.allowUnfree = true; };
-#in
+let modpack = pkgs.callPackage ./mods.nix {};
+in
 {
     services.factorio = {
         enable = true;
@@ -13,5 +14,8 @@
         openFirewall = true;
         requireUserVerification = false;
         nonBlockingSaving = true;
+        saveName = "jappies";
+
+        mods = [modpack];
     };
 }

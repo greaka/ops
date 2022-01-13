@@ -41,5 +41,14 @@
     useACMEHost = "greaka.de";
   };
 
-  networking.firewall.allowedTCPPorts = [ 1935 3478 ];
+  # nginx can't allow dns
+  # services.nginx.streamConfig  = ''
+  #   server {
+  #     listen 0.0.0.0:1934;
+  #     allow home.greaka.de;
+  #     proxy_pass localhost:1935;
+  #   }
+  # '';
+
+  networking.firewall.allowedTCPPorts = [ 1935 9999 3478 ];
 }
