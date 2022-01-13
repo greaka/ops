@@ -13,4 +13,5 @@
   };
 
   alerts = [ "terraria" ];
+  backups = [ "/var/lib/terraria/.local/share/Terraria/Worlds" ];
 }

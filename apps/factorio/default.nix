@@ -18,4 +18,6 @@ in
 
         mods = [modpack];
     };
+
+    backups = [ "/var/lib/factorio/saves" ];
 }

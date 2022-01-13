@@ -10,6 +10,7 @@ in
     imports = [
       ./hetzner
       ./apps/alerting
+      ./apps/restic
 
       ./apps/nginx
       ./apps/wvwbot
@@ -26,6 +27,16 @@ in
     };
 
     networking.hostId = "a7344d84";
+
+    deployment.keys."backblaze" = {
+      text = secrets."backblaze";
+      permissions = "0400";
+    };
+
+    deployment.keys."restic" = {
+      text = secrets."restic";
+      permissions = "0400";
+    };
 
     deployment.keys."wvwbot-config.json" = {
       text = secrets."wvwbot-config.json";
