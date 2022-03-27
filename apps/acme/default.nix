@@ -1,11 +1,11 @@
 { ... }: {
   security.acme = {
-    email = "acme@greaka.de";
     acceptTerms = true;
-    certs."greaka.de" = {
+    defaults = {
+      email = "acme@greaka.de";
       dnsProvider = "cloudflare";
-      extraDomainNames = [ "*.greaka.de" ];
       credentialsFile = "/run/keys/acme-cloudflare";
     };
+    certs."greaka.de".extraDomainNames = [ "*.greaka.de" ];
   };
 }

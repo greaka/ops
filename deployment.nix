@@ -2,7 +2,10 @@ with builtins;
 let secrets = import ./secrets.nix;
 in
 {
-  network.description = "greaka cloud";
+  network = {
+    description = "greaka cloud";
+    storage.legacy = {};
+  };
 
   defaults = { imports = [ ./common.nix ]; };
 
@@ -18,6 +21,7 @@ in
       # ./apps/terraria
       ./apps/factorio
       ./apps/ovenmediaengine
+      #./apps/github-runner
     ];
 
     hetzner = {
@@ -30,6 +34,11 @@ in
 
     deployment.keys."backblaze" = {
       text = secrets."backblaze";
+      permissions = "0400";
+    };
+
+    deployment.keys."github-runner" = {
+      text = secrets."github-runner";
       permissions = "0400";
     };
 

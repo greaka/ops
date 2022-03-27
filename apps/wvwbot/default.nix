@@ -2,7 +2,13 @@
 let secret = "wvwbot-config.json";
 in
 {
-  imports = [ ./override.nix ../redis ../acme ];
+  imports = [ ./override.nix ../acme ];
+
+  services.redis.servers.wvwbot = {
+    enable = true;
+    port = 6379;
+  };
+  backups = [ "/var/lib/redis/dump.rdb" ];
 
   users.users.wvwbot = {
     isSystemUser = true;
@@ -14,8 +20,8 @@ in
   systemd.services.wvwbot = {
     description = "wvwbot";
     wantedBy = [ "multi-user.target" ];
-    after = [ "network-online.target" "redis.service" "${secret}-key.service" ];
-    wants = [ "redis.service" "${secret}-key.service" ];
+    after = [ "network-online.target" "redis-wvwbot.service" "${secret}-key.service" ];
+    wants = [ "redis-wvwbot.service" "${secret}-key.service" ];
     serviceConfig = {
       User = "wvwbot";
       Restart = "always";
@@ -25,7 +31,7 @@ in
     };
   };
 
-  alerts = [ "wvwbot" ];
+  alerts = [ "wvwbot" "redis-wvwbot" ];
 
   services.nginx.virtualHosts."wvwbot.greaka.de" = {
     forceSSL = true;

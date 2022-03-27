@@ -1,7 +1,7 @@
 { config, ... }: {
   imports = [ 
     ../acme
-    ./override.nix
+    #./override.nix
    ];
 
   users.users.plikd = {

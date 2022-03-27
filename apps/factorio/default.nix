@@ -19,5 +19,6 @@ in
         mods = [modpack];
     };
 
+    alerts = [ "factorio" ];
     backups = [ "/var/lib/factorio/saves" ];
 }
