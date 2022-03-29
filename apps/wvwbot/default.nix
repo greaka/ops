@@ -8,7 +8,7 @@ in
     enable = true;
     port = 6379;
   };
-  backups = [ "/var/lib/redis/dump.rdb" ];
+  backups = [ "/var/lib/redis-wvwbot/dump.rdb" ];
 
   users.users.wvwbot = {
     isSystemUser = true;

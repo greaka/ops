@@ -20,8 +20,14 @@
         <script src="https://cdn.jsdelivr.net/npm/ovenplayer/dist/ovenplayer.js"></script>
 
     <script>
+        const v = window.localStorage.getItem('volume') || 100;
         const player = OvenPlayer.create('player', {
             autoStart: true,
+            volume: v,
+            webrtcConfig: {
+                timeoutMaxRetry: 1000000,
+                connectionTimeout: 1000
+            },
             sources: [
                 {
                     label: 'High Quality Fluss',
@@ -29,6 +35,26 @@
                     file: 'wss://stream.greaka.de/ws'
                 }
             ]
+        });
+
+        function restart() {
+            window.setTimeout(function() {
+                player.play();
+            }, 1000);
+        }
+
+        player.once('ready', function() {
+            player.play();
+        });
+        player.on('volumeChanged', function(n) {
+            window.setTimeout(function() {
+                window.localStorage.setItem('volume', n.volume);
+            }, 0);
+        });
+        player.on('stateChanged', function(state) {
+            if ((state.prevstate === 'playing' || state.prevstate === 'loading') && state.newstate === 'error') {
+                restart();
+            }
         });
     </script>
     </body>
