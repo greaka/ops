@@ -1,23 +1,26 @@
 <!doctype html>
 <html>
-    <head>
-        <title>Ofenfluss</title>
-<style>
-    body {
-        margin: 0 auto;
-    }
-    #playerwrapper {
-        width: 100vw;
-        height: 100vh;
-    }
-</style>
-    </head>
-    <body>
-        <div id="playerwrapper">
-            <div id="player"></div>
-        </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/ovenplayer/dist/ovenplayer.js"></script>
+<head>
+    <title>Ofenfluss</title>
+    <style>
+        body {
+            margin: 0 auto;
+        }
+
+        #playerwrapper {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="playerwrapper">
+        <div id="player"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ovenplayer/dist/ovenplayer.js"></script>
 
     <script>
         const v = window.localStorage.getItem('volume') || 100;
@@ -25,7 +28,7 @@
             autoStart: true,
             volume: v,
             webrtcConfig: {
-                timeoutMaxRetry: 1000000,
+                timeoutMaxRetry: 10,
                 connectionTimeout: 1000
             },
             sources: [
@@ -38,24 +41,25 @@
         });
 
         function restart() {
-            window.setTimeout(function() {
+            window.setTimeout(function () {
                 player.play();
             }, 1000);
         }
 
-        player.once('ready', function() {
+        player.once('ready', function () {
             player.play();
         });
-        player.on('volumeChanged', function(n) {
-            window.setTimeout(function() {
+        player.on('volumeChanged', function (n) {
+            window.setTimeout(function () {
                 window.localStorage.setItem('volume', n.volume);
             }, 0);
         });
-        player.on('stateChanged', function(state) {
+        player.on('stateChanged', function (state) {
             if ((state.prevstate === 'playing' || state.prevstate === 'loading') && state.newstate === 'error') {
                 restart();
             }
         });
     </script>
-    </body>
+</body>
+
 </html>

@@ -1,8 +1,8 @@
-{ lib, stdenv
+{ lib
+, stdenv
 , fetchFromGitHub
 , fetchpatch
 , srt
-, ffmpeg_3_4
 , bc
 , pkg-config
 , perl
@@ -19,13 +19,13 @@
 
 stdenv.mkDerivation rec {
   pname = "oven-media-engine";
-  version = "0.12.9";
+  version = "0.13.2";
 
   src = fetchFromGitHub {
     owner = "AirenSoft";
     repo = "OvenMediaEngine";
     rev = "v${version}";
-    sha256 = "0d3ymw747frl40w5d6r33lf1s72v7fiv742yjr1m6la2phb9h834";
+    sha256 = "0lkpidx4r890mcdk9m69j4iahm7qr7w34h11w1nmi132v0rqm0h8";
   };
 
   sourceRoot = "source/src";
@@ -39,6 +39,7 @@ stdenv.mkDerivation rec {
     patchShebangs core/colorg++
     patchShebangs core/colorgcc
     patchShebangs projects/main/update_git_info.sh
+
     sed -i -e '/^CC =/d' -e '/^CXX =/d' -e '/^AR =/d' projects/third_party/pugixml-1.9/scripts/pugixml.make
   '';
 
@@ -52,9 +53,9 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     description = "Open-source streaming video service with sub-second latency";
-    homepage    = "https://ovenmediaengine.com";
-    license     = licenses.gpl2Only;
+    homepage = "https://ovenmediaengine.com";
+    license = licenses.gpl2Only;
     maintainers = with maintainers; [ lukegb ];
-    platforms   = [ "x86_64-linux" ];
+    platforms = [ "x86_64-linux" ];
   };
 }

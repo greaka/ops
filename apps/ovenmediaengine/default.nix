@@ -2,7 +2,7 @@
 let streamKey = builtins.readFile ./stream.key;
 in
 {
-  # imports = [ ./override.nix ];
+  imports = [ ./override.nix ];
 
   users.users.ovenmediaengine = {
     isSystemUser = true;

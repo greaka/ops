@@ -11,7 +11,7 @@ with lib; with builtins; let
 in
 stdenv.mkDerivation rec {
   pname = "factorio-mods";
-  version = "3";
+  version = "4";
   src = source;
   buildCommand = ''
     mkdir -p $out
