@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 #let pkgs = import <nixos-master> { config.allowUnfree = true; };
-let modpack = pkgs.callPackage ./mods.nix {};
+let
     pinned = (let
           hostPkgs = import <nixpkgs> {};
           pinnedPkgs = hostPkgs.fetchFromGitHub {
@@ -25,7 +25,7 @@ in
         nonBlockingSaving = true;
         saveName = "jappies";
 
-        mods = [modpack];
+        mods = import ./mods.nix { lib = lib; pkgs = pkgs; };
     };
 
     alerts = [ "factorio" ];
