@@ -16,16 +16,17 @@ in
   networking.firewall.allowedUDPPorts = ports;
 
   networking.wireguard.interfaces = {
-    wg0 = {
-      ips = [ "10.100.0.1/24" ];
+    wg0 = let ip_prefix = "10.100.0";
+    in {
+      ips = [ "${ip_prefix}.1/24" ];
 
       listenPort = 50820;
 
       postSetup = ''
-        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
+        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s ${ip_prefix}.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
       '';
       postShutdown = ''
-        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
+        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${ip_prefix}.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
       '';
 
       privateKeyFile = "/run/keys/wg";
@@ -33,7 +34,7 @@ in
       peers = [
         { # Greaka Arch Desktop
           publicKey = "N9/WeSGj+EW1WpsXohO7rktVlTr/OhktBiybpIOScRk=";
-          allowedIPs = [ "10.100.0.2/32" ];
+          allowedIPs = [ "${ip_prefix}.2/32" ];
         }
       ];
     };
