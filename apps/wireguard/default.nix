@@ -1,6 +1,7 @@
 { lib, pkgs, config, ... }:
 let interfaceNames = lib.attrsets.mapAttrsToList (name: value: name) config.networking.wireguard.interfaces;
     serviceNames = builtins.map (name: "wireguard-${name}") interfaceNames;
+    ports = lib.attrsets.mapAttrsToList (name: value: value.listenPort) config.networking.wireguard.interfaces;
 in
 {
   systemd.services = lib.genAttrs serviceNames (name: 
@@ -12,7 +13,7 @@ in
 
   networking.nat.enable = true;
   networking.nat.internalInterfaces = interfaceNames;
-  networking.firewall.allowedUDPPorts = [ config.networking.wireguard.interfaces.wg0.listenPort ];
+  networking.firewall.allowedUDPPorts = ports;
 
   networking.wireguard.interfaces = {
     wg0 = {
