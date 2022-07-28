@@ -36,7 +36,7 @@
     useACMEHost = "greaka.de";
   };
 
-  services.nginx.clientMaxBodySize = "1G";
+  services.nginx.clientMaxBodySize = "10G";
 
   alerts = [ "plikd" ];
   backups = [ "/var/lib/plikd" ];

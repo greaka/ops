@@ -17,7 +17,7 @@ in
         admins = [
             "Greaka"
         ];
-        package = pinned.factorio-headless;
+        #package = pinned.factorio-headless;
 
         game-name = "Greaka Inc.";
         openFirewall = true;

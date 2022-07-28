@@ -21,4 +21,10 @@ in
   environment.defaultPackages = [];
   boot.enableContainers = lib.mkDefault false;
   documentation.enable = false;
+  # nix.autoOptimiseStore = true;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
 }

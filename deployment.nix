@@ -21,7 +21,8 @@ in
       # ./apps/terraria
       ./apps/factorio
       ./apps/ovenmediaengine
-      #./apps/github-runner
+      # ./apps/github-runner
+      ./apps/wireguard
     ];
 
     hetzner = {
@@ -39,7 +40,7 @@ in
 
     deployment.keys."github-runner" = {
       text = secrets."github-runner";
-      permissions = "0400";
+      permissions = "0444";
     };
 
     deployment.keys."restic" = {
@@ -62,6 +63,11 @@ in
     deployment.keys."telegram-alerts-token" = {
       text = secrets."telegram-alerts-token";
       user = "alert-telegram";
+      permissions = "0400";
+    };
+
+    deployment.keys."wg" = {
+      text = secrets."wg";
       permissions = "0400";
     };
   };
