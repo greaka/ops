@@ -23,6 +23,7 @@ in
       ./apps/ovenmediaengine
       # ./apps/github-runner
       ./apps/wireguard
+      ./apps/matrix
     ];
 
     hetzner = {
