@@ -4,6 +4,7 @@
     enable = true;
     settings.global = {
       server_name = "greaka.de";
+      enable_lightning_bolt = false;
     };
   };
 
@@ -11,9 +12,9 @@
   services.nginx.virtualHosts."greaka.de" = {
     forceSSL = true;
     useACMEHost = "greaka.de";
-    listen = with lib; flatten (map (addr: map (port: {inherit addr port; ssl = true;}) [443 8448]) config.services.nginx.defaultListenAddresses);
+    listen = with lib; flatten (map (addr: map (port: {inherit addr port; ssl = port != 80;}) [80 443 8448]) config.services.nginx.defaultListenAddresses);
     locations."/_matrix" = {
-      proxyPass = "http://localhost:${builtins.toString config.services.matrix-conduit.settings.global.port}";
+      proxyPass = "http://localhost:${toString config.services.matrix-conduit.settings.global.port}";
       priority = 200;
     };
   };

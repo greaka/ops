@@ -24,6 +24,7 @@ in
       # ./apps/github-runner
       ./apps/wireguard
       ./apps/matrix
+      ./apps/vaultwarden
     ];
 
     hetzner = {
@@ -39,10 +40,10 @@ in
       permissions = "0400";
     };
 
-    deployment.keys."github-runner" = {
-      text = secrets."github-runner";
-      permissions = "0444";
-    };
+    # deployment.keys."github-runner" = {
+    #   text = secrets."github-runner";
+    #   permissions = "0444";
+    # };
 
     deployment.keys."restic" = {
       text = secrets."restic";
@@ -69,6 +70,12 @@ in
 
     deployment.keys."wg" = {
       text = secrets."wg";
+      permissions = "0400";
+    };
+
+    deployment.keys."vaultwarden" = {
+      text = secrets."vaultwarden";
+      user = "vaultwarden";
       permissions = "0400";
     };
   };
