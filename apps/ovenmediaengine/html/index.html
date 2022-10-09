@@ -23,6 +23,7 @@
     <script src="https://cdn.jsdelivr.net/npm/ovenplayer/dist/ovenplayer.js"></script>
 
     <script>
+        const url = 'wss://' + window.location.host + '/ws';
         const v = window.localStorage.getItem('volume') || 100;
         const player = OvenPlayer.create('player', {
             autoStart: true,
@@ -35,7 +36,7 @@
                 {
                     label: 'High Quality Fluss',
                     type: 'webrtc',
-                    file: 'wss://stream.greaka.de/ws'
+                    file: url
                 }
             ]
         });

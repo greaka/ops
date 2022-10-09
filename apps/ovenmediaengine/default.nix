@@ -1,8 +1,9 @@
-{ pkgs, ... }:
-let streamKey = builtins.readFile ./stream.key;
+{ lib, pkgs, ... }:
+let streamKey = host: builtins.readFile (./keys + "/${builtins.head (lib.splitString "." host)}");
+    hosts = map (host: "${host}.greaka.de") ["stream" "janovi"];
 in
 {
-  imports = [ ./override.nix ];
+  # imports = [ ./override.nix ];
 
   users.users.ovenmediaengine = {
     isSystemUser = true;
@@ -29,7 +30,7 @@ in
 
   alerts = [ "ovenmediaengine" ];
 
-  services.nginx.virtualHosts."stream.greaka.de" = {
+  services.nginx.virtualHosts = lib.genAttrs hosts (host: {
     forceSSL = true;
     locations."/" = {
       root = ./html;
@@ -38,10 +39,10 @@ in
     locations."/ws" = {
       priority = 999;
       proxyWebsockets = true;
-      proxyPass = "http://localhost:3333/app/${streamKey}";
+      proxyPass = "http://localhost:3333/app/${streamKey host}";
     };
     useACMEHost = "greaka.de";
-  };
+  });
 
   # nginx can't allow dns
   # services.nginx.streamConfig  = ''
