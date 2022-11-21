@@ -4,27 +4,28 @@
     storage.legacy = {};
   };
 
-  defaults = { imports = [ ./common.nix ]; };
+  defaults.imports = [
+    ./common.nix
+    ./hetzner
+    ./secrets.nix
+    ./apps/utils/alerting
+    ./apps/utils/restic
+  ];
 
   kenma = { ... }: {
     imports = [
-      ./hetzner
-      ./secrets.nix
-      ./apps/utils/alerting
-      ./apps/utils/restic
-
-      ./apps/utils/nginx
-      ./apps/services/wvwbot
-      ./apps/misc/plikd
-      ./apps/games/terraria
       ./apps/games/factorio
+      ./apps/games/terraria
       ./apps/games/vintagestory
-      ./apps/misc/ovenmediaengine
       # ./apps/misc/github-runner
+      ./apps/misc/ovenmediaengine
       ./apps/misc/paperless
-      ./apps/infra/wireguard
+      ./apps/misc/plikd
       ./apps/infra/matrix
       ./apps/infra/vaultwarden
+      ./apps/infra/wireguard
+      ./apps/services/wvwbot
+      ./apps/utils/nginx
     ];
 
     hetzner = {
