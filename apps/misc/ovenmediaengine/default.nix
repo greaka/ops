@@ -1,6 +1,6 @@
 { lib, pkgs, ... }:
 let streamKey = host: builtins.readFile (./keys + "/${builtins.head (lib.splitString "." host)}");
-    hosts = map (host: "${host}.greaka.de") ["stream" "janovi"];
+    hosts = map (host: "${host}.greaka.de") ["stream" "janovi" "leon"];
 in
 {
   # imports = [ ./override.nix ];

@@ -6,6 +6,7 @@
     <style>
         body {
             margin: 0 auto;
+            background-color: #181818;
         }
 
         #playerwrapper {
@@ -29,7 +30,7 @@
             autoStart: true,
             volume: v,
             webrtcConfig: {
-                timeoutMaxRetry: 10,
+                timeoutMaxRetry: 100000,
                 connectionTimeout: 1000
             },
             sources: [
@@ -41,24 +42,10 @@
             ]
         });
 
-        function restart() {
-            window.setTimeout(function () {
-                player.play();
-            }, 1000);
-        }
-
-        player.once('ready', function () {
-            player.play();
-        });
         player.on('volumeChanged', function (n) {
             window.setTimeout(function () {
                 window.localStorage.setItem('volume', n.volume);
             }, 0);
-        });
-        player.on('stateChanged', function (state) {
-            if ((state.prevstate === 'playing' || state.prevstate === 'loading') && state.newstate === 'error') {
-                restart();
-            }
         });
     </script>
 </body>

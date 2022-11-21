@@ -2,7 +2,7 @@
 let secret = "wvwbot-config.json";
 in
 {
-  imports = [ ./override.nix ../acme ];
+  imports = [ ./override.nix ];
 
   services.redis.servers.wvwbot = {
     enable = true;
@@ -13,7 +13,6 @@ in
   users.users.wvwbot = {
     isSystemUser = true;
     group = "wvwbot";
-    extraGroups = [ "acme" ];
   };
   users.groups.wvwbot = {};
 

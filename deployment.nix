@@ -9,22 +9,24 @@ in
 
   defaults = { imports = [ ./common.nix ]; };
 
-  kenma = { resources, ... }: {
+  kenma = { ... }: {
     imports = [
       ./hetzner
-      ./apps/alerting
-      ./apps/restic
+      ./apps/utils/alerting
+      ./apps/utils/restic
 
-      ./apps/nginx
-      ./apps/wvwbot
-      ./apps/plikd
-      # ./apps/terraria
-      ./apps/factorio
-      ./apps/ovenmediaengine
-      # ./apps/github-runner
-      ./apps/wireguard
-      ./apps/matrix
-      ./apps/vaultwarden
+      ./apps/utils/nginx
+      ./apps/services/wvwbot
+      ./apps/misc/plikd
+      ./apps/games/terraria
+      ./apps/games/factorio
+      ./apps/games/vintagestory
+      ./apps/misc/ovenmediaengine
+      # ./apps/misc/github-runner
+      ./apps/misc/paperless
+      ./apps/infra/wireguard
+      ./apps/infra/matrix
+      ./apps/infra/vaultwarden
     ];
 
     hetzner = {
@@ -44,6 +46,11 @@ in
     #   text = secrets."github-runner";
     #   permissions = "0444";
     # };
+
+    deployment.keys."paperless" = {
+      text = secrets."paperless";
+      permissions = "0400";
+    };
 
     deployment.keys."restic" = {
       text = secrets."restic";

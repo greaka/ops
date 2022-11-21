@@ -10,5 +10,9 @@
         initialize = true;
         passwordFile = "/run/keys/restic";
         environmentFile = "/run/keys/backblaze";
+        pruneOpts = [
+            "--keep-daily 10"
+            "--max-unused 0"
+        ];
     };
 }

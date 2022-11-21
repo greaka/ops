@@ -1,6 +1,6 @@
 { config, ... }: {
   imports = [ 
-    ../acme
+    ../../utils/acme
     #./override.nix
    ];
 
