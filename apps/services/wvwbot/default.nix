@@ -50,4 +50,6 @@ in
     source = "${pkgs.wvwbot}/templates";
     target = "wvwbot/templates";
   };
+
+  keys."wvwbot-config.json".user = "wvwbot";
 }

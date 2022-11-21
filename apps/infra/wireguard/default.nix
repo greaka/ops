@@ -41,4 +41,6 @@ in
   };
 
   alerts = serviceNames;
+
+  keys.wg = {};
 }

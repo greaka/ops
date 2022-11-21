@@ -16,4 +16,6 @@
   };
 
   systemd.services.paperless-copy-password.wants = [ "paperless-key.service" ];
+
+  keys.paperless = {};
 }

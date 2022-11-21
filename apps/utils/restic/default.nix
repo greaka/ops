@@ -15,4 +15,7 @@
             "--max-unused 0"
         ];
     };
+
+    keys.backblaze = {};
+    keys.restic = {};
 }

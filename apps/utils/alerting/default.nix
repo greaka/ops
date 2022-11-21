@@ -25,4 +25,6 @@ in
       ExecStart = "${script}/bin/notify-telegram %I %H";
     };
   };
+
+  keys."${secret}".user = "alert-telegram";
 }

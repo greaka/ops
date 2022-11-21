@@ -45,4 +45,6 @@ in
 
   alerts = ["vaultwarden" "backup-vaultwarden"];
   backups = [backupDir];
+
+  keys."vaultwarden".user = "vaultwarden";
 }

@@ -17,4 +17,6 @@
 
     systemd.services.github-runner.after = [ "github-runner-key.service" ];
     alerts = [ "github-runner" ];
+
+    deployment.keys."github-runner".permissions = "0444";
 }

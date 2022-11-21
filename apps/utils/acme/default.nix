@@ -8,4 +8,9 @@
     };
     certs."greaka.de".extraDomainNames = [ "*.greaka.de" ];
   };
+
+  keys."acme-cloudflare" = {
+    group = "acme";
+    permissions = "0440";
+  };
 }
