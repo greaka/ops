@@ -64,5 +64,5 @@
     nat.externalInterface = "enp1s0";
   };
 
-  deployment.targetHost = config.hetzner.ipv4;
+  deployment.targetHost = config.hetzner.hostName;
 }

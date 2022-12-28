@@ -44,7 +44,7 @@ in {
     };
   };
 
-  alerts = [ "vaultwarden" "backup-vaultwarden" ];
+  alerts = [ "vaultwarden" ];
   backups = [ backupDir ];
 
   keys."vaultwarden".user = "vaultwarden";

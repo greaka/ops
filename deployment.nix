@@ -1,19 +1,14 @@
-{
-  network = {
-    description = "greaka cloud";
-    storage.legacy = { };
-  };
-
-  defaults.imports = [
+let
+  defaults = [
     ./common.nix
     ./hetzner
     ./secrets.nix
     ./apps/utils/alerting
     ./apps/utils/restic
   ];
-
+in {
   kenma = { ... }: {
-    imports = [
+    imports = defaults ++ [
       ./apps/games/factorio
       ./apps/games/terraria
       ./apps/games/vintagestory
@@ -35,6 +30,7 @@
     };
 
     networking.hostId = "a7344d84";
+    system.stateVersion = "23.05";
   };
 }
 
