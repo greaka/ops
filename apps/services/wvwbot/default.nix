@@ -1,7 +1,6 @@
 { pkgs, ... }:
 let secret = "wvwbot-config.json";
-in
-{
+in {
   imports = [ ./override.nix ];
 
   services.redis.servers.wvwbot = {
@@ -14,12 +13,16 @@ in
     isSystemUser = true;
     group = "wvwbot";
   };
-  users.groups.wvwbot = {};
+  users.groups.wvwbot = { };
 
   systemd.services.wvwbot = {
     description = "wvwbot";
     wantedBy = [ "multi-user.target" ];
-    after = [ "network-online.target" "redis-wvwbot.service" "${secret}-key.service" ];
+    after = [
+      "network-online.target"
+      "redis-wvwbot.service"
+      "${secret}-key.service"
+    ];
     wants = [ "redis-wvwbot.service" "${secret}-key.service" ];
     serviceConfig = {
       User = "wvwbot";

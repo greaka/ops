@@ -27,7 +27,8 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     homepage = "https://terraria.org";
-    description = "Dedicated server for Terraria, a 2D action-adventure sandbox";
+    description =
+      "Dedicated server for Terraria, a 2D action-adventure sandbox";
     platforms = [ "x86_64-linux" ];
     license = licenses.unfree;
     maintainers = with maintainers; [ ncfavier ];

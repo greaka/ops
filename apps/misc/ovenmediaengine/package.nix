@@ -1,21 +1,5 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, fetchpatch
-, srt
-, bc
-, pkg-config
-, perl
-, openssl_3_0
-, zlib
-, ffmpeg
-, libvpx
-, libopus
-, libuuid
-, srtp
-, jemalloc
-, pcre2
-}:
+{ lib, stdenv, fetchFromGitHub, fetchpatch, srt, bc, pkg-config, perl
+, openssl_3_0, zlib, ffmpeg, libvpx, libopus, libuuid, srtp, jemalloc, pcre2 }:
 
 stdenv.mkDerivation rec {
   pname = "oven-media-engine";
@@ -29,11 +13,13 @@ stdenv.mkDerivation rec {
   };
 
   sourceRoot = "source/src";
-  makeFlags = "release CONFIG_LIBRARY_PATHS= CONFIG_PKG_PATHS= GLOBAL_CC=$(CC) GLOBAL_CXX=$(CXX) GLOBAL_LD=$(CXX) SHELL=${stdenv.shell}";
+  makeFlags =
+    "release CONFIG_LIBRARY_PATHS= CONFIG_PKG_PATHS= GLOBAL_CC=$(CC) GLOBAL_CXX=$(CXX) GLOBAL_LD=$(CXX) SHELL=${stdenv.shell}";
   enableParallelBuilding = true;
 
   nativeBuildInputs = [ bc pkg-config perl ];
-  buildInputs = [ openssl_3_0 srt zlib ffmpeg libvpx libopus srtp jemalloc pcre2 libuuid ];
+  buildInputs =
+    [ openssl_3_0 srt zlib ffmpeg libvpx libopus srtp jemalloc pcre2 libuuid ];
 
   preBuild = ''
     patchShebangs core/colorg++

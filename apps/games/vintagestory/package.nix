@@ -1,26 +1,13 @@
-{ lib
-, stdenv
-, fetchurl
-, makeWrapper
-, makeDesktopItem
-, copyDesktopItems
-, mono
-, xorg
-, gtk2
-, sqlite
-, openal
-, cairo
-, libGLU
-, SDL2
-, freealut
-}:
+{ lib, stdenv, fetchurl, makeWrapper, makeDesktopItem, copyDesktopItems, mono
+, xorg, gtk2, sqlite, openal, cairo, libGLU, SDL2, freealut }:
 
 stdenv.mkDerivation rec {
   pname = "vintagestory";
   version = "1.17.9";
 
   src = fetchurl {
-    url = "https://cdn.vintagestory.at/gamefiles/stable/vs_archive_${version}.tar.gz";
+    url =
+      "https://cdn.vintagestory.at/gamefiles/stable/vs_archive_${version}.tar.gz";
     sha256 = "0slsxvfpymgfc3ahm20nkyv283yr4lgzb25dpkxnsjqah1dbla1f";
   };
 
@@ -28,18 +15,9 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ mono ];
 
-  runtimeLibs = lib.makeLibraryPath ([
-    gtk2
-    sqlite
-    openal
-    cairo
-    libGLU
-    SDL2
-    freealut
-  ] ++ (with xorg; [
-    libX11
-    libXi
-  ]));
+  runtimeLibs = lib.makeLibraryPath
+    ([ gtk2 sqlite openal cairo libGLU SDL2 freealut ]
+      ++ (with xorg; [ libX11 libXi ]));
 
   desktopItems = makeDesktopItem {
     name = "vintagestory";
@@ -73,7 +51,8 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "An in-development indie sandbox game about innovation and exploration";
+    description =
+      "An in-development indie sandbox game about innovation and exploration";
     homepage = "https://www.vintagestory.at/";
     license = licenses.unfree;
     maintainers = with maintainers; [ artturin ];

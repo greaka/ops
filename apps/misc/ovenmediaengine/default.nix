@@ -1,15 +1,16 @@
 { lib, pkgs, ... }:
-let streamKey = host: builtins.readFile (./keys + "/${builtins.head (lib.splitString "." host)}");
-    hosts = map (host: "${host}.greaka.de") ["stream" "janovi" "leon"];
-in
-{
+let
+  streamKey = host:
+    builtins.readFile (./keys + "/${builtins.head (lib.splitString "." host)}");
+  hosts = map (host: "${host}.greaka.de") [ "stream" "janovi" "leon" ];
+in {
   # imports = [ ./override.nix ];
 
   users.users.ovenmediaengine = {
     isSystemUser = true;
     group = "ovenmediaengine";
   };
-  users.groups.ovenmediaengine = {};
+  users.groups.ovenmediaengine = { };
 
   systemd.services.ovenmediaengine = {
     description = pkgs.oven-media-engine.meta.description;
@@ -22,7 +23,8 @@ in
       Restart = "always";
       RestartSec = "2";
       RestartPreventExitStatus = "1";
-      ExecStart = "${pkgs.oven-media-engine}/bin/OvenMediaEngine -d -c ${./config}";
+      ExecStart =
+        "${pkgs.oven-media-engine}/bin/OvenMediaEngine -d -c ${./config}";
       StandardOutput = "null";
       LimitNOFILE = "65536";
     };

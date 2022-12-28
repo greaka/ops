@@ -1,10 +1,10 @@
 { config, ... }:
-let domain = "greaka.de";
-    fullDomain = "bw.${domain}";
-    backupDir = "/tmp/vw-backup";
-    cfg = config.services.vaultwarden.config;
-in
-{
+let
+  domain = "greaka.de";
+  fullDomain = "bw.${domain}";
+  backupDir = "/tmp/vw-backup";
+  cfg = config.services.vaultwarden.config;
+in {
   services = {
     vaultwarden = {
       enable = true;
@@ -38,13 +38,14 @@ in
           proxyWebsockets = true;
         };
 
-        "/notifications/hub/negotiate".proxyPass = "http://localhost:${toString cfg.rocketPort}";
+        "/notifications/hub/negotiate".proxyPass =
+          "http://localhost:${toString cfg.rocketPort}";
       };
     };
   };
 
-  alerts = ["vaultwarden" "backup-vaultwarden"];
-  backups = [backupDir];
+  alerts = [ "vaultwarden" "backup-vaultwarden" ];
+  backups = [ backupDir ];
 
   keys."vaultwarden".user = "vaultwarden";
 }

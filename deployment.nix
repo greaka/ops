@@ -1,7 +1,7 @@
 {
   network = {
     description = "greaka cloud";
-    storage.legacy = {};
+    storage.legacy = { };
   };
 
   defaults.imports = [

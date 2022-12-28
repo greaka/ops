@@ -5,8 +5,7 @@ let
     #!${pkgs.stdenv.shell}
     ${pkgs.curl}/bin/curl -X POST --silent --output /dev/null https://api.telegram.org/bot$(cat /run/keys/${secret})/sendMessage -d chat_id=121591954 -d text="$2: $1"
   '';
-in
-{
+in {
   imports = [ ./options.nix ./alerts.nix ];
 
   users.users."alert-telegram" = {
@@ -14,7 +13,7 @@ in
     group = "alert-telegram";
     extraGroups = [ "keys" ];
   };
-  users.groups."alert-telegram" = {};
+  users.groups."alert-telegram" = { };
 
   systemd.services."alert-telegram@" = {
     description = "send a notification about failed systemd services";

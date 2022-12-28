@@ -1,15 +1,15 @@
 { config, ... }: {
-  imports = [ 
+  imports = [
     ../../utils/acme
     #./override.nix
-   ];
+  ];
 
   users.users.plikd = {
     isSystemUser = true;
     group = "plikd";
     extraGroups = [ "acme" ];
   };
-  users.groups.plikd = {};
+  users.groups.plikd = { };
 
   services.plikd = {
     enable = true;

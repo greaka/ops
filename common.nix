@@ -2,8 +2,7 @@
 let
   keys = lib.splitString "\n"
     (builtins.readFile (builtins.fetchurl "https://github.com/greaka.keys"));
-in
-{
+in {
   nixpkgs.config.allowUnfree = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   #system.autoUpgrade.enable = true;
@@ -18,7 +17,7 @@ in
 
   # slim down the image
   system.disableInstallerTools = true;
-  environment.defaultPackages = [];
+  environment.defaultPackages = [ ];
   boot.enableContainers = lib.mkDefault false;
   documentation.enable = false;
   # nix.autoOptimiseStore = true;

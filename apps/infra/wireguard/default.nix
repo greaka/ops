@@ -1,15 +1,16 @@
 { lib, pkgs, config, ... }:
-let interfaceNames = lib.attrsets.mapAttrsToList (name: value: name) config.networking.wireguard.interfaces;
-    serviceNames = builtins.map (name: "wireguard-${name}") interfaceNames;
-    ports = lib.attrsets.mapAttrsToList (name: value: value.listenPort) config.networking.wireguard.interfaces;
-in
-{
-  systemd.services = lib.genAttrs serviceNames (name: 
-                        {
-                          wants = [ "wg-key.service" ];
-                          after = [ "wg-key.service" ];
-                          before = lib.mkForce [];
-                        });
+let
+  interfaceNames = lib.attrsets.mapAttrsToList (name: value: name)
+    config.networking.wireguard.interfaces;
+  serviceNames = builtins.map (name: "wireguard-${name}") interfaceNames;
+  ports = lib.attrsets.mapAttrsToList (name: value: value.listenPort)
+    config.networking.wireguard.interfaces;
+in {
+  systemd.services = lib.genAttrs serviceNames (name: {
+    wants = [ "wg-key.service" ];
+    after = [ "wg-key.service" ];
+    before = lib.mkForce [ ];
+  });
 
   networking.nat.enable = true;
   networking.nat.internalInterfaces = interfaceNames;
@@ -31,16 +32,14 @@ in
 
       privateKeyFile = "/run/keys/wg";
 
-      peers = [
-        { # Greaka Arch Desktop
-          publicKey = "N9/WeSGj+EW1WpsXohO7rktVlTr/OhktBiybpIOScRk=";
-          allowedIPs = [ "${ip_prefix}.2/32" ];
-        }
-      ];
+      peers = [{ # Greaka Arch Desktop
+        publicKey = "N9/WeSGj+EW1WpsXohO7rktVlTr/OhktBiybpIOScRk=";
+        allowedIPs = [ "${ip_prefix}.2/32" ];
+      }];
     };
   };
 
   alerts = serviceNames;
 
-  keys.wg = {};
+  keys.wg = { };
 }

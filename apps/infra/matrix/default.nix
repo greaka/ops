@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
   services.matrix-conduit = {
     enable = true;
     settings.global = {
@@ -12,9 +11,16 @@
   services.nginx.virtualHosts."greaka.de" = {
     forceSSL = true;
     useACMEHost = "greaka.de";
-    listen = with lib; flatten (map (addr: map (port: {inherit addr port; ssl = port != 80;}) [80 443 8448]) config.services.nginx.defaultListenAddresses);
+    listen = with lib;
+      flatten (map (addr:
+        map (port: {
+          inherit addr port;
+          ssl = port != 80;
+        }) [ 80 443 8448 ]) config.services.nginx.defaultListenAddresses);
     locations."/_matrix" = {
-      proxyPass = "http://localhost:${toString config.services.matrix-conduit.settings.global.port}";
+      proxyPass = "http://localhost:${
+          toString config.services.matrix-conduit.settings.global.port
+        }";
       priority = 200;
     };
   };

@@ -9,7 +9,7 @@ let
   };
   valFlag = name: val:
     optionalString (val != null)
-      ''-${name} "${escape [ "\\" ''"'' ] (toString val)}"'';
+    ''-${name} "${escape [ "\\" ''"'' ] (toString val)}"'';
   boolFlag = name: val: optionalString val "-${name}";
   flags = [
     (valFlag "port" cfg.port)
@@ -23,16 +23,15 @@ let
     (boolFlag "secure" cfg.secure)
     (boolFlag "noupnp" cfg.noUPnP)
   ];
-in
-{
+in {
   config = {
     nixpkgs.config.packageOverrides = pkgs: {
-      terraria-server = pkgs.callPackage ./package.nix {};
+      terraria-server = pkgs.callPackage ./package.nix { };
     };
 
     systemd.services.terraria.serviceConfig.User = mkForce "root";
     users.users.terraria.group = "terraria";
-    users.groups.terraria = {};
+    users.groups.terraria = { };
 
     # users.users.terraria.extraGroups = ["tty"];
 
