@@ -26,7 +26,7 @@ in
       Restart = "always";
       WorkingDirectory = "/etc/wvwbot";
       ExecStart = "${pkgs.wvwbot}/bin/discordwvwbot";
-      RuntimeMaxSec = 86400;
+      #RuntimeMaxSec = 86400;
     };
   };
 
