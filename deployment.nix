@@ -10,8 +10,8 @@ in {
   kenma = { ... }: {
     imports = defaults ++ [
       ./apps/games/factorio
-      ./apps/games/terraria
-      ./apps/games/vintagestory
+      # ./apps/games/terraria
+      # ./apps/games/vintagestory
       # ./apps/misc/github-runner
       ./apps/misc/ovenmediaengine
       ./apps/misc/paperless
