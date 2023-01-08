@@ -1,15 +1,11 @@
 { config, lib, pkgs, ... }:
 with builtins;
 let
-  readSecret = name: readFile (./secrets + "/${name}");
-  secrets =
-    mapAttrs (name: type: if type != "directory" then readSecret name else null)
-    (readDir ./secrets);
   keyStart = name:
     (pkgs.writeScriptBin "${name}-key-start" ''
       #!${pkgs.bash}/bin/bash
       set -e
-      inotifywait -qq -e delete_self "/run/keys/${name}" &
+      ${pkgs.inotify-tools}/bin/inotifywait -qq -e delete_self "/run/keys/${name}" &
 
       if [[ ! -e "/run/keys/${name}" ]]; then
         echo 'flapped up'
@@ -22,7 +18,7 @@ let
       #!${pkgs.bash}/bin/bash
       set -e
       (while read f; do if [ "$f" = "${name}" ]; then break; fi; done \
-        < <(inotifywait -qm --format '%f' -e create,move /run/keys) ) &
+        < <(${pkgs.inotify-tools}/bin/inotifywait -qm --format '%f' -e create,move /run/keys) ) &
 
       if [[ -e "/run/keys/${name}" ]]; then
         echo 'flapped down'
@@ -52,7 +48,7 @@ in {
       }));
     };
   config.deployment.secrets = mapAttrs (name: value: {
-    source = secrets."${name}";
+    source = "./secrets/${name}";
     destination = "/run/keys/${name}";
     owner = {
       user = value.user;
