@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>👀</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <script defer type="text/javascript">
+        let el;
+        async function run() {
+            try {
+                const res = await fetch("https://" + window.location.host + "/viewers");
+                let count;
+                if (res.ok) {
+                  const data = await res.json();
+                  count = data.response.totalConnections;
+                }
+                else {
+                  count = "offline";
+                }
+                el.innerText = count;
+                document.title = "👀 " + count;
+            } catch {
+                el.innerText = "error";
+                document.title = "👀 error";
+            } finally {
+                window.setTimeout(run, 1000);
+            }
+        }
+
+        function load() {
+            el = document.getElementById("number");
+            run();
+        }
+    </script>
+</head>
+
+<body onload="load()" style="
+               font-size: 20vh;
+               color: #eee;
+               background-color: #333;
+               height: 80vh;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               ">
+    <div id="number"></div>
+</body>
+
+</html>

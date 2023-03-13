@@ -1,1 +1,2 @@
 redirects.nix filter=git-crypt diff=git-crypt
+static.nix filter=git-crypt diff=git-crypt

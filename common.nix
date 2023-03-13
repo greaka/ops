@@ -19,6 +19,7 @@ in {
   system.disableInstallerTools = true;
   environment.defaultPackages = [ ];
   boot.enableContainers = lib.mkDefault false;
+  boot.kernel.sysctl."fs.file-max" = 500000;
   documentation.enable = false;
   # nix.autoOptimiseStore = true;
   nix.gc = {

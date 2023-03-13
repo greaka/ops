@@ -39,7 +39,6 @@ in {
     forceSSL = true;
     locations."/".proxyPass = "http://localhost:4040";
     useACMEHost = "greaka.de";
-    default = true;
   };
 
   environment.etc.wvwbot = {

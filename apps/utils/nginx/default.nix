@@ -1,5 +1,5 @@
 { ... }: {
-  imports = [ ./redirects.nix ];
+  imports = [ ./redirects.nix ./static.nix ];
 
   users.users.nginx = {
     isSystemUser = true;
@@ -8,8 +8,8 @@
 
   services.nginx = {
     enable = true;
-    #        user = "root";
-    #        group = "acme";
+    enableReload = true;
+
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
     recommendedTlsSettings = true;
