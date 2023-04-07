@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+args@{ lib, pkgs, ... }:
 let
   streamKey = host: builtins.readFile (./keys + "/${host}");
   hosts = [ "stream" "janovi" "leon" "pistolenjoe" ];
@@ -7,7 +7,7 @@ let
     (name: value: lib.attrsets.nameValuePair (name + ".greaka.de") value)
     (lib.genAttrs hosts fn);
 in {
-  # imports = [ ./override.nix ];
+  imports = [ (import ./all.nix (args // { hosts = hosts; })) ];
 
   users.users.ovenmediaengine = {
     isSystemUser = true;
@@ -53,9 +53,12 @@ in {
           streamKey host
         }";
       extraConfig = ''
+        add_header Access-Control-Allow-Origin * always;
+        proxy_set_header Accept-Encoding "";
         proxy_set_header authorization "Basic Zm9v";
         sub_filter '${streamKey host}' '${host}';
-        proxy_intercept_errors on;
+        sub_filter_types application/json;
+        proxy_intercept_errors off;
         error_page 404 = /viewers/error;
       '';
     };

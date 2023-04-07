@@ -10,16 +10,16 @@
         async function run() {
             try {
                 const res = await fetch("https://" + window.location.host + "/viewers");
-                let count;
+                let count = "offline";
                 if (res.ok) {
                   const data = await res.json();
                   count = data.response.totalConnections;
+                  document.title = "👀 " + count;
                 }
                 else {
-                  count = "offline";
+                  document.title = document.title.replace("👀", "⚠️");
                 }
                 el.innerText = count;
-                document.title = "👀 " + count;
             } catch {
                 el.innerText = "error";
                 document.title = "👀 error";
