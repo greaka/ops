@@ -1,4 +1,4 @@
-{ config, lib, ... }: {
+{ config, lib, pkgs, ... }: {
   services.matrix-conduit = {
     enable = true;
     settings.global = {
@@ -17,11 +17,50 @@
           inherit addr port;
           ssl = port != 80;
         }) [ 80 443 8448 ]) config.services.nginx.defaultListenAddresses);
-    locations."/_matrix" = {
-      proxyPass = "http://localhost:${
-          toString config.services.matrix-conduit.settings.global.port
-        }";
-      priority = 200;
+    locations = {
+      "/_matrix" = {
+        proxyPass = "http://localhost:${
+            toString config.services.matrix-conduit.settings.global.port
+          }";
+        proxyWebsockets = true;
+        extraConfig = ''
+          proxy_set_header Host $host;
+          proxy_buffering off;
+        '';
+
+        priority = 200;
+      };
+
+      "=/.well-known/matrix/server" = {
+        alias = pkgs.writeText "well-known-matrix-server" ''
+          {
+            "m.server": "greaka.de"
+          }
+        '';
+
+        extraConfig = ''
+          default_type application/json;
+        '';
+
+        priority = 200;
+      };
+
+      "=/.well-known/matrix/client" = {
+        alias = pkgs.writeText "well-known-matrix-client" ''
+          {
+            "m.homeserver": {
+              "base_url": "https://greaka.de"
+            }
+          }
+        '';
+
+        extraConfig = ''
+          default_type application/json;
+          add_header Access-Control-Allow-Origin "*";
+        '';
+
+        priority = 200;
+      };
     };
   };
 
