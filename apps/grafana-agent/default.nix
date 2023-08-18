@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 let secret = "grafana-agent-apikey";
 in {
   services.grafana-agent = {
@@ -55,8 +55,22 @@ in {
     };
   };
 
+  users.users.grafana = {
+    isSystemUser = true;
+    group = "grafana";
+    extraGroups = [ "keys" ];
+  };
+  users.groups.grafana = { };
+
+  systemd.services."grafana-agent" = {
+    serviceConfig = {
+      User = "grafana";
+      DynamicUser = lib.mkForce false;
+    };
+  };
+
   keys."${secret}" = {
     services = [ "grafana-agent" ];
-    permissions = "644";
+    user = "grafana";
   };
 }
