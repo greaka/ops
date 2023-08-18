@@ -1,5 +1,9 @@
 { pkgs, rustPlatform, lib, ... }:
-let source = builtins.fetchGit { url = "git@github.com:greaka/wvwbot.git"; };
+let
+  source = builtins.fetchGit {
+    url = "git@github.com:greaka/wvwbot.git";
+    rev = "066c654ac9191048115dad0b5dce683ec78330bf";
+  };
 in rustPlatform.buildRustPackage {
   name = "wvwbot";
   pname = "wvwbot";
