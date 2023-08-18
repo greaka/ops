@@ -41,5 +41,5 @@ in {
 
   alerts = serviceNames;
 
-  keys.wg = { };
+  keys.wg.services = serviceNames;
 }

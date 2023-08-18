@@ -44,8 +44,16 @@ in {
     };
   };
 
+  systemd.services.vaultwarden = {
+    wants = [ "vaultwarden-key.service" ];
+    after = [ "vaultwarden-key.service" ];
+  };
+
   alerts = [ "vaultwarden" ];
   backups = [ backupDir ];
 
-  keys."vaultwarden".user = "vaultwarden";
+  keys."vaultwarden" = {
+    services = [ "vaultwarden" ];
+    user = "vaultwarden";
+  };
 }

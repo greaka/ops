@@ -15,7 +15,5 @@
     useACMEHost = "greaka.de";
   };
 
-  systemd.services.paperless-copy-password.wants = [ "paperless-key.service" ];
-
-  keys.paperless = { };
+  keys.paperless.services = [ "paperless-copy-password" ];
 }

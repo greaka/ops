@@ -9,9 +9,7 @@ in {
           name = "wvwbot";
           scrape_configs = [{
             job_name = "bot";
-            static_configs = {
-              targets = [ "localhost:${config.wvwbot.metricsPort}" ];
-            };
+            static_configs = [{ targets = [ "localhost:36129" ]; }];
           }];
           remote_write = [{
             url =
@@ -54,14 +52,11 @@ in {
           };
         }];
       };
-
-      server = {
-        http_listen_port = 12345;
-        log_level = "info";
-      };
     };
   };
 
-  keys."${secret}" = { };
-  systemd.services.grafana-agent.wants = [ "${secret}-key.service" ];
+  keys."${secret}" = {
+    services = [ "grafana-agent" ];
+    permissions = "644";
+  };
 }

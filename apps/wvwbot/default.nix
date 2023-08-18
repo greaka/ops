@@ -1,34 +1,51 @@
-{ pkgs, ... }:
-let secret = "wvwbot-config.json";
-in {
-  imports = [ ./override.nix ];
+{ config, pkgs, ... }: {
+  imports = [ ./override.nix ../grafana-agent ];
 
   services.redis.servers.wvwbot = {
     enable = true;
     port = 6379;
   };
-  backups = [ "/var/lib/redis-wvwbot/dump.rdb" ];
+  backups = [
+    "/var/lib/redis-wvwbot/dump.rdb"
+    "${config.services.postgresqlBackup.location}/wvwbot.sql.gz"
+  ];
+
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_15;
+    port = 6433;
+    ensureDatabases = [ "wvwbot" ];
+    ensureUsers = [{
+      name = "wvwbot";
+      ensureClauses.superuser = true;
+      ensurePermissions = { "DATABASE wvwbot" = "ALL PRIVILEGES"; };
+    }];
+  };
+
+  services.postgresqlBackup = {
+    enable = true;
+    databases = [ "wvwbot" ];
+  };
 
   users.users.wvwbot = {
     isSystemUser = true;
     group = "wvwbot";
+    extraGroups = [ "postgres" ];
   };
   users.groups.wvwbot = { };
 
   systemd.services.wvwbot = {
     description = "wvwbot";
     wantedBy = [ "multi-user.target" ];
-    after = [
-      "network-online.target"
-      "redis-wvwbot.service"
-      "${secret}-key.service"
-    ];
-    wants = [ "redis-wvwbot.service" "${secret}-key.service" ];
+    after =
+      [ "network-online.target" "redis-wvwbot.service" "postgresql.service" ];
+    wants = [ "redis-wvwbot.service" "postgresql.service" ];
     serviceConfig = {
       User = "wvwbot";
       Restart = "always";
-      WorkingDirectory = "/etc/wvwbot";
-      ExecStart = "${pkgs.wvwbot}/bin/discordwvwbot";
+      EnvironmentFile = "/run/keys/wvwbot";
+      # WorkingDirectory = "/etc/wvwbot";
+      ExecStart = "${pkgs.wvwbot}/bin/wvwbot";
       #RuntimeMaxSec = 86400;
     };
   };
@@ -41,17 +58,8 @@ in {
     useACMEHost = "greaka.de";
   };
 
-  environment.etc.wvwbot = {
-    source = "/run/keys/${secret}";
-    target = "wvwbot/config.json";
+  keys.wvwbot = {
+    services = [ "wvwbot" ];
     user = "wvwbot";
-    mode = "0400";
   };
-
-  environment.etc.wvwbot-templates = {
-    source = "${pkgs.wvwbot}/templates";
-    target = "wvwbot/templates";
-  };
-
-  keys."wvwbot-config.json".user = "wvwbot";
 }

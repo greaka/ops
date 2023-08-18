@@ -12,8 +12,10 @@
 
   boot.runSize = "16G";
 
-  systemd.services.github-runner.after = [ "github-runner-key.service" ];
   alerts = [ "github-runner" ];
 
-  deployment.keys."github-runner".permissions = "0444";
+  keys."github-runner" = {
+    services = [ "github-runner" ];
+    permissions = "0444";
+  };
 }

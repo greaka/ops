@@ -1,4 +1,6 @@
 { config, lib, pkgs, ... }: {
+  imports = [ ./override.nix ];
+
   services.matrix-conduit = {
     enable = true;
     settings.global = {

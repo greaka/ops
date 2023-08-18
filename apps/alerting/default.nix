@@ -17,13 +17,15 @@ in {
 
   systemd.services."alert-telegram@" = {
     description = "send a notification about failed systemd services";
-    after = [ "network-online.target" "${secret}-key.service" ];
-    wants = [ "${secret}-key.service" ];
+    after = [ "network-online.target" ];
     serviceConfig = {
       User = "alert-telegram";
       ExecStart = "${script}/bin/notify-telegram %I %H";
     };
   };
 
-  keys."${secret}".user = "alert-telegram";
+  keys."${secret}" = {
+    services = [ "alert-telegram@" ];
+    user = "alert-telegram";
+  };
 }
