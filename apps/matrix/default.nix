@@ -1,5 +1,5 @@
 { config, lib, pkgs, ... }: {
-  imports = [ ./override.nix ];
+  #imports = [ ./override.nix ];
 
   services.matrix-conduit = {
     enable = true;
@@ -52,6 +52,9 @@
           {
             "m.homeserver": {
               "base_url": "https://greaka.de"
+            },
+            "org.matrix.msc3575.proxy": {
+              "url": "https://greaka.de"
             }
           }
         '';

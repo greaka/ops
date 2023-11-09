@@ -21,23 +21,29 @@
         <div id="player"></div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/ovenplayer/dist/ovenplayer.js"></script>
 
     <script>
-        const url = 'wss://' + window.location.host + '/ws';
         const v = window.localStorage.getItem('volume') || 100;
         const player = OvenPlayer.create('player', {
             autoStart: true,
             volume: v,
+            autoFallback: false,
             webrtcConfig: {
                 timeoutMaxRetry: 100000,
                 connectionTimeout: 1000
             },
             sources: [
                 {
-                    label: 'High Quality Fluss',
+                    label: 'Internet',
                     type: 'webrtc',
-                    file: url
+                    file: `wss://${window.location.host}/ws`
+                },
+                {
+                    label: "Carrier Pigeon",
+                    type: "ll-hls",
+                    file: `https://${window.location.host}/llhls`
                 }
             ]
         });

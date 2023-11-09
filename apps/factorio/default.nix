@@ -23,8 +23,7 @@ in {
     saveName = "jappies";
 
     mods = import ./mods.nix {
-      lib = lib;
-      pkgs = pkgs;
+      inherit lib pkgs;
     };
   };
 

@@ -3,13 +3,13 @@
 
 rustPlatform.buildRustPackage {
   pname = "matrix-conduit";
-  version = "0.6.0-next";
+  version = "next";
 
   src = fetchFromGitLab {
     owner = "famedly";
     repo = "conduit";
-    rev = "e9946f81a09b02b12062e2cb999d6836e467e2d7";
-    sha256 = "sha256-C46+7N71/THMkhyfxzHodm1N89w3GDbYat+mn32QjV4=";
+    rev = "3bfdae795d4d9ec9aeaac7465e7535ac88e47756";
+    sha256 = "sha256-35SgWnBkWTyyRwVPyUKoShjzXfX0H1+HDdEEjZ/LsXc=";
   };
 
   # We have to use importCargoLock here because `cargo vendor` currently doesn't support workspace
@@ -19,7 +19,7 @@ rustPlatform.buildRustPackage {
     outputHashes = {
       "heed-0.10.6" = "sha256-rm02pJ6wGYN4SsAbp85jBVHDQ5ITjZZd+79EC2ubRsY=";
       "reqwest-0.11.9" = "sha256-wH/q7REnkz30ENBIK5Rlxnc1F6vOyuEANMHFmiVPaGw=";
-      "ruma-0.8.2" = "sha256-+CjVDLopvkyunZ7jhkDLgfyGkUpl9069h0xDhmLoijQ=";
+      "ruma-0.8.2" = "sha256-onxniELxrYEfFuobgRgNerzEdHEuT2eZyhydO1fHZm0=";
     };
   };
 

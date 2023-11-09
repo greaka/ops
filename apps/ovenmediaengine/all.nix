@@ -14,20 +14,25 @@ let
             async function run() {
                 try {
                     let content = "";
-                    for (const host of hosts) {
-                        const res = await fetch("https://" + host + ".greaka.de/viewers");
+                    const viewers = [];
+                    for (const host in hosts) {
+                        const res = await fetch("https://" + hosts[host] + ".greaka.de/viewers");
                         let count;
                         if (res.ok) {
                             const data = await res.json();
                             count = data.response.totalConnections;
+                            viewers[host] = count;
                         } else {
                             count = "offline";
+                            viewers[host] = "-";
                         }
-                        content += '<div class="host"><span class="name">' + host + '</span><span class="count">' + count + '</span></div>';
+                        content += '<div class="host"><span class="name">' + hosts[host] + '</span><span class="count">' + count + '</span></div>';
                     }
                     el.innerHTML = content;
+                    document.title = "📡 " + viewers.join(" ");
                 } catch {
                     el.innerText = "error";
+                    document.title = "📡 error";
                 } finally {
                     window.setTimeout(run, 1000);
                 }

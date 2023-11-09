@@ -1,4 +1,4 @@
-args@{ lib, pkgs, ... }:
+args@{ lib, pkgs, config, ... }:
 let
   streamKey = host: builtins.readFile (./keys + "/${host}");
   hosts = [ "stream" "janovi" "leon" "pistolenjoe" ];
@@ -7,11 +7,12 @@ let
     (name: value: lib.attrsets.nameValuePair (name + ".greaka.de") value)
     (lib.genAttrs hosts fn);
 in {
-  imports = [ (import ./all.nix (args // { hosts = hosts; })) ];
+  imports = [ (import ./all.nix (args // { inherit hosts; })) ];
 
   users.users.ovenmediaengine = {
     isSystemUser = true;
     group = "ovenmediaengine";
+    extraGroups = ["acme"];
   };
   users.groups.ovenmediaengine = { };
 
@@ -19,6 +20,11 @@ in {
     description = pkgs.oven-media-engine.meta.description;
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
+    environment = {
+      OME_ICE_CANDIDATES = "${config.hetzner.ipv4}:10016/udp";
+      CERT_FULL_CHAIN = "/var/lib/acme/greaka.de/fullchain.pem";
+      CERT_KEY = "/var/lib/acme/greaka.de/key.pem";
+    };
     serviceConfig = {
       Type = "forking";
       PIDFile = "/run/ovenmediaengine.pid";
@@ -44,7 +50,20 @@ in {
     locations."/ws" = {
       priority = 950;
       proxyWebsockets = true;
-      proxyPass = "http://localhost:3333/app/${streamKey host}";
+      proxyPass = "http://localhost:3333/app/${streamKey host}?direction=recv";
+    };
+    locations."/app" = {
+      priority = 930;
+      proxyPass = "https://stream.greaka.de:8082";
+    };
+    locations."/llhls" = {
+      priority = 955;
+      proxyPass = "https://stream.greaka.de:8082/app/${streamKey host}/llhls.m3u8";
+    };
+    locations."/ingest" = {
+      priority = 960;
+      proxyWebsockets = true;
+      proxyPass = "http://localhost:3333/app/";
     };
     locations."= /viewers" = {
       priority = 980;
@@ -65,5 +84,6 @@ in {
     useACMEHost = "greaka.de";
   });
 
-  networking.firewall.allowedTCPPorts = [ 1935 9999 3478 ];
+  networking.firewall.allowedTCPPorts = [ 1935 9999 3478 3334 ];
+  networking.firewall.allowedUDPPorts = [ 10016 ];
 }
