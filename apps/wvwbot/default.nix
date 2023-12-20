@@ -15,11 +15,11 @@
     package = pkgs.postgresql_15;
     port = 6433;
     ensureDatabases = [ "wvwbot" ];
-    ensureUsers = [{
-      name = "wvwbot";
+    ensureUsers = map (user: {
+      name = user;
       ensureClauses.superuser = true;
       ensurePermissions = { "DATABASE wvwbot" = "ALL PRIVILEGES"; };
-    }];
+    })["wvwbot"];
   };
 
   services.postgresqlBackup = {

@@ -2,7 +2,7 @@
 let
   source = builtins.fetchGit {
     url = "git@github.com:greaka/wvwbot.git";
-    rev = "066c654ac9191048115dad0b5dce683ec78330bf";
+    rev = "308a69349bdb4c68d8cb54159a89b35499ad8809";
   };
 in rustPlatform.buildRustPackage {
   name = "wvwbot";
