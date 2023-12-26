@@ -12,7 +12,7 @@ in {
   users.users.ovenmediaengine = {
     isSystemUser = true;
     group = "ovenmediaengine";
-    extraGroups = ["acme"];
+    extraGroups = [ "acme" ];
   };
   users.groups.ovenmediaengine = { };
 
@@ -58,7 +58,8 @@ in {
     };
     locations."/llhls" = {
       priority = 955;
-      proxyPass = "https://stream.greaka.de:8082/app/${streamKey host}/llhls.m3u8";
+      proxyPass =
+        "https://stream.greaka.de:8082/app/${streamKey host}/llhls.m3u8";
     };
     locations."/ingest" = {
       priority = 960;

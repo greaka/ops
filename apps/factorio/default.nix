@@ -22,9 +22,7 @@ in {
     nonBlockingSaving = true;
     saveName = "jappies";
 
-    mods = import ./mods.nix {
-      inherit lib pkgs;
-    };
+    mods = import ./mods.nix { inherit lib pkgs; };
   };
 
   alerts = [ "factorio" ];

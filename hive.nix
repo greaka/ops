@@ -12,6 +12,7 @@
       # ./apps/github-runner
       ./apps/ovenmediaengine
       ./apps/paperless
+      ./apps/atuin
       ./apps/plikd
       ./apps/matrix
       ./apps/vaultwarden

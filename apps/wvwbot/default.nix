@@ -19,7 +19,7 @@
       name = user;
       ensureClauses.superuser = true;
       ensurePermissions = { "DATABASE wvwbot" = "ALL PRIVILEGES"; };
-    })["wvwbot"];
+    }) [ "wvwbot" ];
   };
 
   services.postgresqlBackup = {
