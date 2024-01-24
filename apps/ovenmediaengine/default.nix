@@ -1,11 +1,12 @@
 args@{ lib, pkgs, config, ... }:
 let
   streamKey = host: builtins.readFile (./keys + "/${host}");
-  hosts = [ "stream" "janovi" "leon" "pistolenjoe" ];
+  hosts = [ "stream" "janovi" "leon" "pistolenjoe" "blackmops" ];
   genHosts = fn:
     lib.attrsets.mapAttrs'
     (name: value: lib.attrsets.nameValuePair (name + ".greaka.de") value)
     (lib.genAttrs hosts fn);
+  omeCfg = pkgs.callPackage ./config { inherit hosts; };
 in {
   imports = [ (import ./all.nix (args // { inherit hosts; })) ];
 
@@ -33,7 +34,7 @@ in {
       RestartSec = "2";
       RestartPreventExitStatus = "1";
       ExecStart =
-        "${pkgs.oven-media-engine}/bin/OvenMediaEngine -d -c ${./config}";
+        "${pkgs.oven-media-engine}/bin/OvenMediaEngine -d -c ${omeCfg}";
       StandardOutput = "null";
       LimitNOFILE = "65536";
     };

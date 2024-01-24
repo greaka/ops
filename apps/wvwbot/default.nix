@@ -39,7 +39,8 @@
     wantedBy = [ "multi-user.target" ];
     after =
       [ "network-online.target" "redis-wvwbot.service" "postgresql.service" ];
-    wants = [ "redis-wvwbot.service" "postgresql.service" ];
+    wants =
+      [ "network-online.target" "redis-wvwbot.service" "postgresql.service" ];
     serviceConfig = {
       User = "wvwbot";
       Restart = "always";

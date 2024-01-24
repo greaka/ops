@@ -3,7 +3,9 @@
     enable = true;
     port = 9712;
     openRegistration = false;
-    database.uri = "postgresql:///atuin?host=/run/postgresql&port=${toString config.services.postgresql.port}";
+    database.uri = "postgresql:///atuin?host=/run/postgresql&port=${
+        toString config.services.postgresql.port
+      }";
   };
 
   services.nginx.virtualHosts."atuin.greaka.de" = {

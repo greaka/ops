@@ -18,6 +18,7 @@ in {
   systemd.services."alert-telegram@" = {
     description = "send a notification about failed systemd services";
     after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     serviceConfig = {
       User = "alert-telegram";
       ExecStart = "${script}/bin/notify-telegram %I %H";
