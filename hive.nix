@@ -6,7 +6,7 @@
 
   kenma = { ... }: {
     imports = [
-      ./apps/factorio
+      # ./apps/factorio
       # ./apps/terraria
       # ./apps/vintagestory
       # ./apps/github-runner

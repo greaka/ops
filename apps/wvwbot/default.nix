@@ -1,5 +1,7 @@
-{ config, pkgs, ... }: {
-  imports = [ ./override.nix ../grafana-agent ];
+{ config, pkgs, lib, ... }:
+let pkg = pkgs.callPackage ./package.nix { };
+in {
+  imports = [ ../grafana-agent ];
 
   services.redis.servers.wvwbot = {
     enable = true;
@@ -46,7 +48,7 @@
       Restart = "always";
       EnvironmentFile = "/run/keys/wvwbot";
       # WorkingDirectory = "/etc/wvwbot";
-      ExecStart = "${pkgs.wvwbot}/bin/wvwbot";
+      ExecStart = "${pkg}/bin/wvwbot";
       #RuntimeMaxSec = 86400;
     };
   };

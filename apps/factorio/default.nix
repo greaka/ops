@@ -6,15 +6,15 @@ let
     pinnedPkgs = hostPkgs.fetchFromGitHub {
       owner = "greaka";
       repo = "nixpkgs";
-      rev = "402663dc19c3961bf52063bb720c58087b567675";
-      sha256 = "sha256-V+SvPmX7HvZzMzCbKxZCgW0QC1+iwOkR6/upWTpLmto=";
+      rev = "8837856719e27fcf0aec16c5331ad69ccbf8aef2";
+      sha256 = "sha256-o3V+5XnF6vBAHB3GsvOpiIp5/bD3bbIdx5qMK1NbI6g=";
     };
   in import pinnedPkgs { config.allowUnfree = true; });
 in {
   services.factorio = {
     enable = true;
     admins = [ "Greaka" ];
-    # package = pinned.factorio-headless;
+    package = pinned.factorio-headless;
 
     game-name = "Greaka Inc.";
     openFirewall = true;

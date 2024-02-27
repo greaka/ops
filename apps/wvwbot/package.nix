@@ -1,25 +1,22 @@
-{ pkgs, rustPlatform, lib, ... }:
+{ lib, pkgs, ... }:
 let
-  source = builtins.fetchGit {
-    url = "git@github.com:greaka/wvwbot.git";
-    rev = "308a69349bdb4c68d8cb54159a89b35499ad8809";
-  };
-in rustPlatform.buildRustPackage {
-  name = "wvwbot";
   pname = "wvwbot";
-  src = source;
-  cargoLock = {
-    lockFile = ./Cargo.lock;
-    outputHashes = {
-      "loki-api-0.1.0" = "1i9rwgx174zs10r2s9fzz7nn4bl9mb24mx7h2hgbaxnrwgzx7k70";
-      "twilight-cache-inmemory-0.15.1" =
-        "1h6936i41936qck1vb8gkjbppg17llflq3s5p4i5xc20xqn56f2n";
-      "twilight-http-ratelimiting-0.15.1" =
-        "0h6igjhrq5wfk54qra92jy07q5c12viqzkavd2lm3mbq8bd930qx";
+  sources = /git/wvwbot;
+  crane = import ../../utils/crane { inherit pkgs; };
+
+  sqlFilter = path: _type: null != builtins.match ".*(.sqlx/.*|.sql$)" path;
+  sqlOrCargo = path: type:
+    (sqlFilter path type) || (crane.filterCargoSources path type);
+
+  buildFlags = {
+    src = lib.cleanSourceWith {
+      src = sources;
+      filter = sqlOrCargo;
     };
+    RUSTFLAGS = [ "-C" "target-cpu=znver2" ];
+    nativeBuildInputs = with pkgs; [ cmake ];
+    doCheck = false;
   };
-  cargoHash = lib.fakeHash;
-  nativeBuildInputs = with pkgs; [ cmake cacert ];
-  RUSTFLAGS = [ "-C" "target-cpu=znver2" ];
-  doCheck = false;
-}
+
+  cargoArtifacts = crane.buildDepsOnly (buildFlags // { inherit pname; });
+in crane.buildPackage (buildFlags // { inherit pname cargoArtifacts; })
