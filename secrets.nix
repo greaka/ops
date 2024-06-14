@@ -40,7 +40,7 @@ with lib; {
       services = foldl' (a: b: a // b) { } (flatten serviceKeyPairs);
     in mapAttrs (service: secret: {
       after = [ "${secret}-key.service" ];
-      wants = [ "${secret}-key.service" ];
+      requires = [ "${secret}-key.service" ];
     }) services;
   };
 }

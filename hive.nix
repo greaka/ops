@@ -8,7 +8,7 @@
     imports = [
       # ./apps/factorio
       # ./apps/terraria
-      # ./apps/vintagestory
+      ./apps/vintagestory
       # ./apps/github-runner
       ./apps/ovenmediaengine
       ./apps/paperless
@@ -17,7 +17,7 @@
       ./apps/matrix
       ./apps/vaultwarden
       ./apps/wireguard
-      ./apps/wvwbot
+      # ./apps/wvwbot
       ./apps/nginx
     ];
 

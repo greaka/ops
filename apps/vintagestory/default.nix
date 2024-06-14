@@ -1,5 +1,6 @@
 { pkgs, ... }:
 let
+  localModPath = /etc/xdg/VintagestoryData/Mods;
   stateDirName = "vintagestory";
   datapath = "/var/lib/${stateDirName}";
   user = "vintagestory";
@@ -7,7 +8,7 @@ let
   config = (import ./serverconfig.nix) // {
     StartupCommands = "/op Greaka";
     WorldConfig.WorldType = "wildernesssurvival";
-    WorldConfig.SaveFileLocation = "${datapath}/Saves/stefan.vcdbs";
+    WorldConfig.SaveFileLocation = "${datapath}/Saves/hermits.vcdbs";
     AdvertiseServer = false;
   };
 in {
@@ -29,7 +30,8 @@ in {
       ExecStart = "${
           pkgs.writeScriptBin "vintagestory.sh" ''
             #!/bin/sh
-            ln -fs ${configFile} /var/lib/vintagestory/serverconfig.json
+            ln -fs ${localModPath} ${datapath}/Mods
+            ln -fs ${configFile} ${datapath}/serverconfig.json
             ${pkgs.vintagestory}/bin/vintagestory-server --dataPath ${datapath}
           ''
         }/bin/vintagestory.sh";
@@ -39,5 +41,6 @@ in {
   networking.firewall.allowedTCPPorts = [ config.Port ];
 
   alerts = [ "vintagestory" ];
-  backups = [ "${datapath}/Saves" ];
+  # It got too big
+  # backups = [ "${datapath}/Saves" ];
 }

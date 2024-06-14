@@ -1,7 +1,7 @@
 args@{ lib, pkgs, config, ... }:
 let
   streamKey = host: builtins.readFile (./keys + "/${host}");
-  hosts = [ "stream" "janovi" "leon" "pistolenjoe" "blackmops" ];
+  hosts = lib.reverseList (builtins.filter (x: !(lib.hasPrefix "." x)) (builtins.attrNames (builtins.readDir ./keys)));
   genHosts = fn:
     lib.attrsets.mapAttrs'
     (name: value: lib.attrsets.nameValuePair (name + ".greaka.de") value)
@@ -86,6 +86,6 @@ in {
     useACMEHost = "greaka.de";
   });
 
-  networking.firewall.allowedTCPPorts = [ 1935 9999 3478 3334 ];
-  networking.firewall.allowedUDPPorts = [ 10016 ];
+  networking.firewall.allowedTCPPorts = [ 1935 3478 3334 ];
+  networking.firewall.allowedUDPPorts = [ 10016 9999 ];
 }

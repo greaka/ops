@@ -20,7 +20,7 @@ in {
     ensureUsers = map (user: {
       name = user;
       ensureClauses.superuser = true;
-      ensurePermissions = { "DATABASE wvwbot" = "ALL PRIVILEGES"; };
+      ensureDBOwnership = true;
     }) [ "wvwbot" ];
   };
 
