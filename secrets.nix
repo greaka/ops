@@ -29,6 +29,7 @@ with lib; {
       user = value.user;
       group = value.group;
       permissions = value.permissions;
+      uploadAt = "post-activation";
     }) config.keys;
 
     systemd.services = let

@@ -23,9 +23,9 @@
       DownloadDomain = "https://dl.greaka.de";
       AbuseContact = "plikd@greaka.de";
       EnhancedWebSecurity = false;
-      Authentication = true;
-      NoAnonymousUploads = true;
-      maxTTL = 315576000;
+      FeatureAuthentication = "forced";
+      FeatureExtendTTL = "default";
+      maxTTLStr = "3650d";
     };
   };
 

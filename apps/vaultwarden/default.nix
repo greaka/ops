@@ -15,10 +15,6 @@ in {
         rocketAddress = "0.0.0.0";
         rocketPort = 8881;
 
-        websocketEnabled = true;
-        websocketAddress = "0.0.0.0";
-        websocketPort = 3012;
-
         domain = "https://${fullDomain}";
         signupsAllowed = false;
       };
@@ -31,15 +27,10 @@ in {
       useACMEHost = domain;
 
       locations = {
-        "/".proxyPass = "http://localhost:${toString cfg.rocketPort}";
-
-        "/notifications/hub" = {
-          proxyPass = "http://localhost:${toString cfg.websocketPort}";
+        "/" = {
+          proxyPass = "http://localhost:${toString cfg.rocketPort}";
           proxyWebsockets = true;
         };
-
-        "/notifications/hub/negotiate".proxyPass =
-          "http://localhost:${toString cfg.rocketPort}";
       };
     };
   };
