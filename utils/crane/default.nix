@@ -7,4 +7,5 @@ let
     sha256 = "sha256-jX+B1VGHT0ruHHL5RwS8L21R6miBn4B6s9iVyUJsJJY=";
   };
   local = /git/crane;
-in import local { inherit pkgs; }
+in
+import local { inherit pkgs; }

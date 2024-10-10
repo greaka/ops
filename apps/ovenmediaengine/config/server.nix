@@ -110,10 +110,7 @@ pkgs.writeText "Server.xml" ''
   			<!-- Settings for multi ip/domain and TLS -->
   			<Host>
   			    <Names>
-  			    	${
-            builtins.concatStringsSep "\n"
-            (builtins.map (x: "<Name>${x}.greaka.de</Name>") hosts)
-          }
+  			    	${builtins.concatStringsSep "\n" (builtins.map (x: "<Name>${x}.greaka.de</Name>") hosts)}
   			    </Names>
   			    <TLS>
   			        <!--<CertPath>/opt/ovenmediaengine/bin/origin_conf/stream.pem</CertPath>-->

@@ -1,8 +1,15 @@
-{ hosts, pkgs, stdenv, ... }:
+{
+  hosts,
+  logDir,
+  pkgs,
+  stdenv,
+  ...
+}:
 let
   server = pkgs.callPackage ./server.nix { inherit hosts; };
-  logger = pkgs.callPackage ./logger.nix { inherit hosts; };
-in stdenv.mkDerivation {
+  logger = pkgs.callPackage ./logger.nix { inherit hosts logDir; };
+in
+stdenv.mkDerivation {
   name = "ovenmediaengine-config";
 
   buildCommand = ''

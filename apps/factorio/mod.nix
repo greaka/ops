@@ -1,4 +1,10 @@
-{ lib, stdenv, modName, source, ... }:
+{
+  lib,
+  stdenv,
+  modName,
+  source,
+  ...
+}:
 with lib;
 with builtins;
 let
@@ -6,7 +12,8 @@ let
   filesOfName = f: filter (x: hasPrefix f x) availableFiles;
   lastVersion = f: last (naturalSort (filesOfName f));
   modVersion = s: elemAt (match ".*_(.*).zip" s) 0;
-in stdenv.mkDerivation {
+in
+stdenv.mkDerivation {
   pname = "factorio-mod-${modName}";
   version = modVersion (lastVersion modName);
   src = source + "/${lastVersion modName}";

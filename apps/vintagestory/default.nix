@@ -11,7 +11,8 @@ let
     WorldConfig.SaveFileLocation = "${datapath}/Saves/hermits.vcdbs";
     AdvertiseServer = false;
   };
-in {
+in
+{
   imports = [ ./override.nix ];
 
   users.users."${user}" = {
@@ -27,14 +28,12 @@ in {
       User = "${user}";
       Restart = "on-failure";
       StateDirectory = stateDirName;
-      ExecStart = "${
-          pkgs.writeScriptBin "vintagestory.sh" ''
-            #!/bin/sh
-            ln -fs ${localModPath} ${datapath}/Mods
-            ln -fs ${configFile} ${datapath}/serverconfig.json
-            ${pkgs.vintagestory}/bin/vintagestory-server --dataPath ${datapath}
-          ''
-        }/bin/vintagestory.sh";
+      ExecStart = "${pkgs.writeScriptBin "vintagestory.sh" ''
+        #!/bin/sh
+        ln -fs ${localModPath} ${datapath}/Mods
+        ln -fs ${configFile} ${datapath}/serverconfig.json
+        ${pkgs.vintagestory}/bin/vintagestory-server --dataPath ${datapath}
+      ''}/bin/vintagestory.sh";
     };
   };
 
@@ -42,5 +41,5 @@ in {
 
   alerts = [ "vintagestory" ];
   # It got too big
-  # backups = [ "${datapath}/Saves" ];
+  # backups = [ "${datapath}/Saves/*" ];
 }

@@ -1,13 +1,19 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 let
   domain = "greaka.de";
   fullDomain = "bw.${domain}";
   backupDir = "/tmp/vw-backup";
   cfg = config.services.vaultwarden.config;
-in {
+  pkg = pkgs.callPackage ./package.nix { };
+  webVaultPkg = pkgs.callPackage ./webvault.nix { };
+in
+{
   services = {
     vaultwarden = {
       enable = true;
+
+      package = pkg;
+      webVaultPackage = webVaultPkg;
 
       backupDir = backupDir;
 
@@ -41,7 +47,7 @@ in {
   };
 
   alerts = [ "vaultwarden" ];
-  backups = [ backupDir ];
+  backups = [ "${backupDir}/*" ];
 
   keys."vaultwarden" = {
     services = [ "vaultwarden" ];

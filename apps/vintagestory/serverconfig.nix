@@ -12,7 +12,10 @@
   ServerLanguage = "en";
   SkipEveryChunkRow = 0;
   SkipEveryChunkRowWidth = 0;
-  ModPaths = [ "Mods" "/var/lib/vintagestory/Mods" ];
+  ModPaths = [
+    "Mods"
+    "/var/lib/vintagestory/Mods"
+  ];
   WorldConfig = {
     Seed = null;
     SaveFileLocation = "/var/lib/vintagestory/Saves/default.vcdbs";
@@ -52,8 +55,7 @@
     {
       Code = "suvisitor";
       Name = "Survival Visitor";
-      Description =
-        "Can only visit this world and chat but not use/place/break anything";
+      Description = "Can only visit this world and chat but not use/place/break anything";
       PrivilegeLevel = -1;
       DefaultSpawn = null;
       ForcedSpawn = null;
@@ -73,8 +75,7 @@
     {
       Code = "crvisitor";
       Name = "Creative Visitor";
-      Description =
-        "Can only visit this world, chat and fly but not use/place/break anything";
+      Description = "Can only visit this world, chat and fly but not use/place/break anything";
       PrivilegeLevel = -1;
       DefaultSpawn = null;
       ForcedSpawn = null;
@@ -94,8 +95,7 @@
     {
       Code = "limitedsuplayer";
       Name = "Limited Survival Player";
-      Description =
-        "Can use/place/break blocks only in permitted areas (priv level -1), create/manage player groups and chat";
+      Description = "Can use/place/break blocks only in permitted areas (priv level -1), create/manage player groups and chat";
       PrivilegeLevel = -1;
       DefaultSpawn = null;
       ForcedSpawn = null;
@@ -123,8 +123,7 @@
     {
       Code = "limitedcrplayer";
       Name = "Limited Creative Player";
-      Description =
-        "Can use/place/break blocks in only in permitted areas (priv level -1), create/manage player groups, chat, fly and set his own game mode (= allows fly and change of move speed)";
+      Description = "Can use/place/break blocks in only in permitted areas (priv level -1), create/manage player groups, chat, fly and set his own game mode (= allows fly and change of move speed)";
       PrivilegeLevel = -1;
       DefaultSpawn = null;
       ForcedSpawn = null;
@@ -154,8 +153,7 @@
     {
       Code = "suplayer";
       Name = "Survival Player";
-      Description =
-        "Can use/place/break blocks in unprotected areas (priv level 0), create/manage player groups and chat. Can claim an area of up to 8 chunks.";
+      Description = "Can use/place/break blocks in unprotected areas (priv level 0), create/manage player groups and chat. Can claim an area of up to 8 chunks.";
       PrivilegeLevel = 0;
       DefaultSpawn = null;
       ForcedSpawn = null;
@@ -184,8 +182,7 @@
     {
       Code = "crplayer";
       Name = "Creative Player";
-      Description =
-        "Can use/place/break blocks in all areas (priv level 100), create/manage player groups, chat, fly and set his own game mode (= allows fly and change of move speed). Can claim an area of up to 40 chunks.";
+      Description = "Can use/place/break blocks in all areas (priv level 100), create/manage player groups, chat, fly and set his own game mode (= allows fly and change of move speed). Can claim an area of up to 40 chunks.";
       PrivilegeLevel = 100;
       DefaultSpawn = null;
       ForcedSpawn = null;
@@ -216,8 +213,7 @@
     {
       Code = "sumod";
       Name = "Survival Moderator";
-      Description =
-        "Can use/place/break blocks everywhere (priv level 200), create/manage player groups, chat, kick/ban players and do serverwide announcements. Can claim an area of up to 4 chunks.";
+      Description = "Can use/place/break blocks everywhere (priv level 200), create/manage player groups, chat, kick/ban players and do serverwide announcements. Can claim an area of up to 4 chunks.";
       PrivilegeLevel = 200;
       DefaultSpawn = null;
       ForcedSpawn = null;
@@ -252,8 +248,7 @@
     {
       Code = "crmod";
       Name = "Creative Moderator";
-      Description =
-        "Can use/place/break blocks everywhere (priv level 500), create/manage player groups, chat, kick/ban players, fly and set his own or other players game modes (= allows fly and change of move speed). Can claim an area of up to 40 chunks.";
+      Description = "Can use/place/break blocks everywhere (priv level 500), create/manage player groups, chat, kick/ban players, fly and set his own or other players game modes (= allows fly and change of move speed). Can claim an area of up to 40 chunks.";
       PrivilegeLevel = 500;
       DefaultSpawn = null;
       ForcedSpawn = null;
@@ -291,8 +286,7 @@
     {
       Code = "admin";
       Name = "Admin";
-      Description =
-        "Has all privileges, including giving other players admin status.";
+      Description = "Has all privileges, including giving other players admin status.";
       PrivilegeLevel = 99999;
       DefaultSpawn = null;
       ForcedSpawn = null;

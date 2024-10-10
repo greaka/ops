@@ -1,6 +1,13 @@
-{ config, pkgs, lib, ... }:
-let pkg = pkgs.callPackage ./package.nix { };
-in {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  pkg = pkgs.callPackage ./package.nix { };
+in
+{
   imports = [ ../grafana-agent ];
 
   services.redis.servers.wvwbot = {
@@ -39,10 +46,16 @@ in {
   systemd.services.wvwbot = {
     description = "wvwbot";
     wantedBy = [ "multi-user.target" ];
-    after =
-      [ "network-online.target" "redis-wvwbot.service" "postgresql.service" ];
-    wants =
-      [ "network-online.target" "redis-wvwbot.service" "postgresql.service" ];
+    after = [
+      "network-online.target"
+      "redis-wvwbot.service"
+      "postgresql.service"
+    ];
+    wants = [
+      "network-online.target"
+      "redis-wvwbot.service"
+      "postgresql.service"
+    ];
     serviceConfig = {
       User = "wvwbot";
       Restart = "always";
@@ -53,7 +66,10 @@ in {
     };
   };
 
-  alerts = [ "wvwbot" "redis-wvwbot" ];
+  alerts = [
+    "wvwbot"
+    "redis-wvwbot"
+  ];
 
   services.nginx.virtualHosts."wvwbot.greaka.de" = {
     forceSSL = true;

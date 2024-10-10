@@ -7,9 +7,11 @@ let
   modJson = importJSON "${source}/mod-list.json";
   activeMods = filter (x: x.enabled) modJson.mods;
   modNames = filter (x: x != "base") (map (x: x.name) activeMods);
-  mkPkg = x:
+  mkPkg =
+    x:
     pkgs.callPackage ./mod.nix {
       modName = x;
       source = source;
     };
-in map mkPkg modNames
+in
+map mkPkg modNames

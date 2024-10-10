@@ -23,14 +23,12 @@
             } catch {
                 el.innerText = "error";
                 document.title = "👀 error";
-            } finally {
-                window.setTimeout(run, 1000);
             }
         }
 
         function load() {
             el = document.getElementById("number");
-            run();
+            window.setInterval(run, 1000);
         }
     </script>
 </head>

@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   services.paperless = {
     enable = true;
     passwordFile = "/run/keys/paperless";
@@ -10,8 +11,7 @@
 
   services.nginx.virtualHosts."paperless.greaka.de" = {
     forceSSL = true;
-    locations."/".proxyPass =
-      "http://localhost:${builtins.toString config.services.paperless.port}";
+    locations."/".proxyPass = "http://localhost:${builtins.toString config.services.paperless.port}";
     useACMEHost = "greaka.de";
   };
 

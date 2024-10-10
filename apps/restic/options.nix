@@ -1,5 +1,6 @@
 { lib, ... }:
-with lib; {
+with lib;
+{
   options.backups = mkOption {
     default = [ ];
     type = types.listOf types.str;

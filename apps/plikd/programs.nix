@@ -1,4 +1,11 @@
-{ lib, buildGoModule, fetchFromGitHub, fetchurl, makeWrapper, runCommand }:
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+  fetchurl,
+  makeWrapper,
+  runCommand,
+}:
 
 let
   version = "1.3.2";
@@ -18,11 +25,17 @@ let
     maintainers = with maintainers; [ freezeboy ];
     license = licenses.mit;
   };
-in {
+in
+{
 
   plik = buildGoModule {
     pname = "plik";
-    inherit version meta src vendorSha256;
+    inherit
+      version
+      meta
+      src
+      vendorSha256
+      ;
 
     subPackages = [ "client" ];
     postInstall = ''

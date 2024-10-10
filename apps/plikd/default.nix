@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   imports = [
     ../acme
     #./override.nix
@@ -31,13 +32,12 @@
 
   services.nginx.virtualHosts."dl.greaka.de" = {
     forceSSL = true;
-    locations."/".proxyPass =
-      "https://localhost:${toString config.services.plikd.settings.ListenPort}";
+    locations."/".proxyPass = "https://localhost:${toString config.services.plikd.settings.ListenPort}";
     useACMEHost = "greaka.de";
   };
 
   services.nginx.clientMaxBodySize = "10G";
 
   alerts = [ "plikd" ];
-  backups = [ "/var/lib/plikd" ];
+  backups = [ "/var/lib/plikd/*" ];
 }

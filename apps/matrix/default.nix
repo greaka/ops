@@ -1,15 +1,24 @@
-{ config, lib, pkgs, ... }:
-let pkg = (import (pkgs.fetchFromGitLab {
-    owner = "famedly";
-    repo = "conduit";
-    rev = "b11855e7a1fc00074a13f9d1b9ab04462931332f";
-    sha256 = "sha256-hqjRGQIBmiWpQPhvix8L5rcxeuJ2z0KZS6A6RbmTB/o=";
-  })).outputs.packages.x86_64-linux.default;
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  pkg =
+    (import (
+      pkgs.fetchFromGitLab {
+        owner = "famedly";
+        repo = "conduit";
+        rev = "b11855e7a1fc00074a13f9d1b9ab04462931332f";
+        sha256 = "sha256-hqjRGQIBmiWpQPhvix8L5rcxeuJ2z0KZS6A6RbmTB/o=";
+      }
+    )).outputs.packages.x86_64-linux.default;
 in
 {
   services.matrix-conduit = {
     enable = true;
-    package = pkg;
+    # package = pkg;
     settings.global = {
       server_name = "greaka.de";
       enable_lightning_bolt = false;
@@ -21,17 +30,26 @@ in
   services.nginx.virtualHosts."greaka.de" = {
     forceSSL = true;
     useACMEHost = "greaka.de";
-    listen = with lib;
-      flatten (map (addr:
-        map (port: {
-          inherit addr port;
-          ssl = port != 80;
-        }) [ 80 443 8448 ]) config.services.nginx.defaultListenAddresses);
+    listen =
+      with lib;
+      flatten (
+        map (
+          addr:
+          map
+            (port: {
+              inherit addr port;
+              ssl = port != 80;
+            })
+            [
+              80
+              443
+              8448
+            ]
+        ) config.services.nginx.defaultListenAddresses
+      );
     locations = {
       "/_matrix" = {
-        proxyPass = "http://localhost:${
-            toString config.services.matrix-conduit.settings.global.port
-          }";
+        proxyPass = "http://localhost:${toString config.services.matrix-conduit.settings.global.port}";
         proxyWebsockets = true;
         extraConfig = ''
           proxy_set_header Host $host;
@@ -78,5 +96,5 @@ in
   };
 
   alerts = [ "conduit" ];
-  backups = [ "/var/lib/matrix-conduit" ];
+  backups = [ "/var/lib/matrix-conduit/*" ];
 }

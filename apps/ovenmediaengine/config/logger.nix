@@ -1,10 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, logDir, ... }:
 pkgs.writeText "Logger.xml" ''
   <?xml version="1.0" encoding="UTF-8"?>
 
   <Logger version="2">
   	<!-- Log file location -->
-  	<Path>/var/log/ovenmediaengine</Path>
+  	<Path>${logDir}</Path>
 
   	<!-- Disable some SRT internal logs -->
   	<Tag name="SRT" level="critical" />

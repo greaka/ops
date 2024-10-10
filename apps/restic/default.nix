@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   imports = [ ./options.nix ];
 
   services.restic.backups.backblaze = {
@@ -7,7 +8,10 @@
     initialize = true;
     passwordFile = "/run/keys/restic";
     environmentFile = "/run/keys/backblaze";
-    pruneOpts = [ "--keep-daily 10" "--max-unused 0" ];
+    pruneOpts = [
+      "--keep-daily 10"
+      "--max-unused 0"
+    ];
   };
 
   keys.backblaze = { };

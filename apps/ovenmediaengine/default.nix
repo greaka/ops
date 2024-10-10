@@ -1,13 +1,23 @@
-args@{ lib, pkgs, config, ... }:
+args@{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 let
   streamKey = host: builtins.readFile (./keys + "/${host}");
-  hosts = lib.reverseList (builtins.filter (x: !(lib.hasPrefix "." x)) (builtins.attrNames (builtins.readDir ./keys)));
-  genHosts = fn:
-    lib.attrsets.mapAttrs'
-    (name: value: lib.attrsets.nameValuePair (name + ".greaka.de") value)
-    (lib.genAttrs hosts fn);
-  omeCfg = pkgs.callPackage ./config { inherit hosts; };
-in {
+  hosts = lib.reverseList (
+    builtins.filter (x: !(lib.hasPrefix "." x)) (builtins.attrNames (builtins.readDir ./keys))
+  );
+  genHosts =
+    fn:
+    lib.attrsets.mapAttrs' (name: value: lib.attrsets.nameValuePair (name + ".greaka.de") value) (
+      lib.genAttrs hosts fn
+    );
+  logDir = "/var/log/ovenmediaengine";
+  omeCfg = pkgs.callPackage ./config { inherit hosts logDir; };
+in
+{
   imports = [ (import ./all.nix (args // { inherit hosts; })) ];
 
   users.users.ovenmediaengine = {
@@ -33,14 +43,32 @@ in {
       Restart = "always";
       RestartSec = "2";
       RestartPreventExitStatus = "1";
-      ExecStart =
-        "${pkgs.oven-media-engine}/bin/OvenMediaEngine -d -c ${omeCfg}";
+      ExecStart = "${pkgs.oven-media-engine}/bin/OvenMediaEngine -d -c ${omeCfg}";
       StandardOutput = "null";
       LimitNOFILE = "65536";
     };
   };
 
   alerts = [ "ovenmediaengine" ];
+
+  systemd.services.ovenmediaengine-cleanup = {
+    description = "Clean log directory of ovenmediaengine";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash -c \"find ${logDir}/* -mtime +7 -exec rm {} \\;\"";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  systemd.timers.ovenmediaengine-cleanup = {
+    description = "Timer for ovenmediaengine cleanup";
+    timerConfig = {
+      OnCalendar = lib.mkDefault "23:00";
+      Persistent = "true";
+      Unit = "ovenmediaengine-cleanup.service";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
 
   services.nginx.virtualHosts = genHosts (host: {
     forceSSL = true;
@@ -59,8 +87,7 @@ in {
     };
     locations."/llhls" = {
       priority = 955;
-      proxyPass =
-        "https://stream.greaka.de:8082/app/${streamKey host}/llhls.m3u8";
+      proxyPass = "https://stream.greaka.de:8082/app/${streamKey host}/llhls.m3u8";
     };
     locations."/ingest" = {
       priority = 960;
@@ -69,10 +96,7 @@ in {
     };
     locations."= /viewers" = {
       priority = 980;
-      proxyPass =
-        "http://localhost:8081/v1/stats/current/vhosts/default/apps/app/streams/${
-          streamKey host
-        }";
+      proxyPass = "http://localhost:8081/v1/stats/current/vhosts/default/apps/app/streams/${streamKey host}";
       extraConfig = ''
         add_header Access-Control-Allow-Origin * always;
         proxy_set_header Accept-Encoding "";
@@ -86,6 +110,13 @@ in {
     useACMEHost = "greaka.de";
   });
 
-  networking.firewall.allowedTCPPorts = [ 1935 3478 3334 ];
-  networking.firewall.allowedUDPPorts = [ 10016 9999 ];
+  networking.firewall.allowedTCPPorts = [
+    1935
+    3478
+    3334
+  ];
+  networking.firewall.allowedUDPPorts = [
+    10016
+    9999
+  ];
 }

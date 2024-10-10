@@ -2,8 +2,6 @@
 
 {
   config = {
-    nixpkgs.config.packageOverrides = pkgs: {
-      oven-media-engine = pkgs.callPackage ./package.nix { };
-    };
+    nixpkgs.config.packageOverrides = pkgs: { oven-media-engine = pkgs.callPackage ./package.nix { }; };
   };
 }

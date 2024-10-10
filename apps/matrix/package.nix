@@ -1,4 +1,12 @@
-{ lib, pkgs, rustPlatform, fetchFromGitLab, pkg-config, rocksdb, ... }:
+{
+  lib,
+  pkgs,
+  rustPlatform,
+  fetchFromGitLab,
+  pkg-config,
+  rocksdb,
+  ...
+}:
 let
   pname = "matrix-conduit";
   sources = fetchFromGitLab {
@@ -10,16 +18,21 @@ let
   crane = import ../../utils/crane { inherit pkgs; };
 
   sqlFilter = path: _type: null != builtins.match ".*(.sqlx/.*|.sql$)" path;
-  sqlOrCargo = path: type:
-    (sqlFilter path type) || (crane.filterCargoSources path type);
+  sqlOrCargo = path: type: (sqlFilter path type) || (crane.filterCargoSources path type);
 
   buildFlags = {
     src = lib.cleanSourceWith {
       src = sources;
       filter = sqlOrCargo;
     };
-    RUSTFLAGS = [ "-C" "target-cpu=znver2" ];
-    nativeBuildInputs = [ rustPlatform.bindgenHook pkg-config ];
+    RUSTFLAGS = [
+      "-C"
+      "target-cpu=znver2"
+    ];
+    nativeBuildInputs = [
+      rustPlatform.bindgenHook
+      pkg-config
+    ];
 
     ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
     ROCKSDB_LIB_DIR = "${rocksdb}/lib";
@@ -27,4 +40,5 @@ let
   };
 
   cargoArtifacts = crane.buildDepsOnly (buildFlags // { inherit pname; });
-in crane.buildPackage (buildFlags // { inherit pname cargoArtifacts; })
+in
+crane.buildPackage (buildFlags // { inherit pname cargoArtifacts; })

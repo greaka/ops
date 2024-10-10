@@ -33,14 +33,12 @@ let
                 } catch {
                     el.innerText = "error";
                     document.title = "📡 error";
-                } finally {
-                    window.setTimeout(run, 1000);
                 }
             }
 
             function load() {
                 el = document.getElementById("number");
-                run();
+                window.setInterval(run, 1000);
             }
         </script>
         <style>
@@ -81,7 +79,8 @@ let
 
     </html>
   '';
-in {
+in
+{
   services.nginx.virtualHosts."stream.greaka.de".locations."/all" = {
     priority = 990;
     root = pkgs.writeTextFile {

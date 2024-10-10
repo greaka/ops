@@ -1,5 +1,9 @@
-{ ... }: {
-  imports = [ ./redirects.nix ./static.nix ];
+{ ... }:
+{
+  imports = [
+    ./redirects.nix
+    ./static.nix
+  ];
 
   users.users.nginx = {
     isSystemUser = true;
@@ -16,7 +20,10 @@
     recommendedProxySettings = true;
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
 
   alerts = [ "nginx" ];
 }
