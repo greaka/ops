@@ -15,12 +15,12 @@
     { ... }:
     {
       imports = [
-        # ./apps/factorio
+        ./apps/factorio
         # ./apps/terraria
         # ./apps/vintagestory
         # ./apps/github-runner
         ./apps/ovenmediaengine
-        ./apps/paperless
+        # ./apps/paperless
         ./apps/atuin
         ./apps/plikd
         ./apps/matrix

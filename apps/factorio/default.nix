@@ -1,14 +1,14 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 #let pkgs = import <nixos-master> { config.allowUnfree = true; };
 let
   pinned = (
     let
       hostPkgs = import <nixpkgs> { };
       pinnedPkgs = hostPkgs.fetchFromGitHub {
-        owner = "greaka";
+        owner = "NixOS";
         repo = "nixpkgs";
-        rev = "8837856719e27fcf0aec16c5331ad69ccbf8aef2";
-        sha256 = "sha256-o3V+5XnF6vBAHB3GsvOpiIp5/bD3bbIdx5qMK1NbI6g=";
+        rev = "31ab653f7eba280bb188abf6473e3edf135a1d6f";
+        sha256 = "sha256-30gyK0TvqVht8n1BDyLilk6hmGqkSLdEkezV3/Vkfi4=";
       };
     in
     import pinnedPkgs { config.allowUnfree = true; }
@@ -21,13 +21,14 @@ in
     package = pinned.factorio-headless;
 
     game-name = "Greaka Inc.";
+    port = 34197;
     openFirewall = true;
     requireUserVerification = false;
     nonBlockingSaving = true;
-    saveName = "knoedelsuppe";
+    saveName = "spaceage";
 
-    mods = import ./mods.nix { inherit lib pkgs; };
-    mods-dat = /home/greaka/.factorio/mods/mod-settings.dat;
+    # mods = import ./mods.nix { inherit config lib pkgs; };
+    # mods-dat = /home/greaka/.factorio/mods/mod-settings.dat;
   };
 
   alerts = [ "factorio" ];

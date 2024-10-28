@@ -1,26 +1,34 @@
 {
   lib,
   stdenv,
-  modName,
-  source,
+  pkgs,
+  api,
+  username,
+  token,
+  factorioVersion,
   ...
 }:
 with lib;
 with builtins;
 let
-  availableFiles = attrNames (readDir source);
-  filesOfName = f: filter (x: hasPrefix f x) availableFiles;
-  lastVersion = f: last (naturalSort (filesOfName f));
-  modVersion = s: elemAt (match ".*_(.*).zip" s) 0;
+  baseUrl = "https://mods.factorio.com";
+  releases = filter (x: x.info_json.factorio_version == factorioVersion) api.releases;
+  releasesSorted = naturalSort (map (x: x.version) releases);
+  lastRelease = last releasesSorted;
+  release = head (filter (x: x.version == lastRelease) releases);
+  asset = last (splitString "/" release.download_url);
 in
 stdenv.mkDerivation {
-  pname = "factorio-mod-${modName}";
-  version = modVersion (lastVersion modName);
-  src = source + "/${lastVersion modName}";
+  pname = "factorio-mod-${api.name}";
+  version = release.version;
+  src = pkgs.fetchurl {
+    name = "factorio-modraw-${api.name}-${asset}";
+    url = "${baseUrl}${release.download_url}?username=${username}&token=${token}";
+    sha1 = release.sha1;
+  };
   buildCommand = ''
     mkdir -p $out
-    cp $src $out/${lastVersion modName}
+    ln -s $src $out/${release.file_name}
   '';
-  preferLocalBuild = true;
   deps = [ ];
 }
