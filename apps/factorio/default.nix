@@ -7,8 +7,8 @@ let
       pinnedPkgs = hostPkgs.fetchFromGitHub {
         owner = "NixOS";
         repo = "nixpkgs";
-        rev = "31ab653f7eba280bb188abf6473e3edf135a1d6f";
-        sha256 = "sha256-30gyK0TvqVht8n1BDyLilk6hmGqkSLdEkezV3/Vkfi4=";
+        rev = "7e35ac30ea1d236419653182559367ecd8a30675";
+        sha256 = "sha256-vG9m5BJm9cFYBr23bnaloZXLz4hkAsA/frPNr5YWt74=";
       };
     in
     import pinnedPkgs { config.allowUnfree = true; }
@@ -32,5 +32,5 @@ in
   };
 
   alerts = [ "factorio" ];
-  backups = [ "/var/lib/factorio/saves/*" ];
+  backups = [ "/var/lib/factorio/saves" ];
 }

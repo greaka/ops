@@ -26,6 +26,7 @@ stdenv.mkDerivation {
     url = "${baseUrl}${release.download_url}?username=${username}&token=${token}";
     sha1 = release.sha1;
   };
+  preferLocalBuild = true;
   buildCommand = ''
     mkdir -p $out
     ln -s $src $out/${release.file_name}

@@ -96,5 +96,5 @@ in
   };
 
   alerts = [ "conduit" ];
-  backups = [ "/var/lib/matrix-conduit/*" ];
+  backups = [ "/var/lib/matrix-conduit" ];
 }

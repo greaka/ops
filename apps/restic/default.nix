@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   imports = [ ./options.nix ];
 
@@ -13,6 +13,8 @@
       "--max-unused 0"
     ];
   };
+
+  systemd.services."restic-backups-backblaze".serviceConfig.PrivateTmp = lib.mkForce false;
 
   keys.backblaze = { };
   keys.restic = { };

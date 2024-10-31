@@ -22,7 +22,7 @@ in
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_15;
-    port = 6433;
+    settings.port = 6433;
     ensureDatabases = [ "wvwbot" ];
     ensureUsers = map (user: {
       name = user;

@@ -47,7 +47,7 @@ in
   };
 
   alerts = [ "vaultwarden" ];
-  backups = [ "${backupDir}/*" ];
+  backups = [ backupDir ];
 
   keys."vaultwarden" = {
     services = [ "vaultwarden" ];
