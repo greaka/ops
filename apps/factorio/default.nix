@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 #let pkgs = import <nixos-master> { config.allowUnfree = true; };
 let
   pinned = (
@@ -7,8 +12,8 @@ let
       pinnedPkgs = hostPkgs.fetchFromGitHub {
         owner = "NixOS";
         repo = "nixpkgs";
-        rev = "7e35ac30ea1d236419653182559367ecd8a30675";
-        sha256 = "sha256-vG9m5BJm9cFYBr23bnaloZXLz4hkAsA/frPNr5YWt74=";
+        rev = "2d545bfee669dbe76898b5fece34c63cb5f68379";
+        sha256 = "sha256-/B0wj5K9uObqQsN1C6aIxZINiR99D1p99sFz49z2iuE=";
       };
     in
     import pinnedPkgs { config.allowUnfree = true; }
@@ -18,7 +23,7 @@ in
   services.factorio = {
     enable = true;
     admins = [ "Greaka" ];
-    package = pinned.factorio-headless;
+    #package = pinned.factorio-headless;
 
     game-name = "Greaka Inc.";
     port = 34197;

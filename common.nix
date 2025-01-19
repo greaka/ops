@@ -33,7 +33,7 @@ in
   networking.firewall.logRefusedConnections = false;
   services.openssh = {
     enable = true;
-    settings.passwordAuthentication = false;
+    settings.PasswordAuthentication = false;
     ports = [ 32 ];
   };
   users.users.root.openssh.authorizedKeys.keys = keys;

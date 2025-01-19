@@ -17,7 +17,7 @@
       imports = [
         ./apps/factorio
         # ./apps/terraria
-        # ./apps/vintagestory
+        ./apps/vintagestory
         # ./apps/github-runner
         ./apps/ovenmediaengine
         # ./apps/paperless

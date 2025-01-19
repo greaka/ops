@@ -16,6 +16,9 @@ let
     );
   logDir = "/var/log/ovenmediaengine";
   omeCfg = pkgs.callPackage ./config { inherit hosts logDir; };
+  pkg =
+    with pkgs;
+    ((oven-media-engine.overrideAttrs { patches = [ ]; }).override { ffmpeg = ffmpeg_6; });
 in
 {
   imports = [ (import ./all.nix (args // { inherit hosts; })) ];
@@ -28,7 +31,7 @@ in
   users.groups.ovenmediaengine = { };
 
   systemd.services.ovenmediaengine = {
-    description = pkgs.oven-media-engine.meta.description;
+    description = pkg.meta.description;
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
     environment = {
@@ -43,7 +46,7 @@ in
       Restart = "always";
       RestartSec = "2";
       RestartPreventExitStatus = "1";
-      ExecStart = "${pkgs.oven-media-engine}/bin/OvenMediaEngine -d -c ${omeCfg}";
+      ExecStart = "${pkg}/bin/OvenMediaEngine -d -c ${omeCfg}";
       StandardOutput = "null";
       LimitNOFILE = "65536";
     };
