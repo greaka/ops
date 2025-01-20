@@ -1,16 +1,18 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 let
   localModPath = /home/greaka/.config/VintagestoryData/Mods;
   stateDirName = "vintagestory";
-  datapath = "/var/lib/${stateDirName}";
+  dataPath = "/var/lib/${stateDirName}";
+  modPath = "${dataPath}/Mods";
   user = "vintagestory";
   gendef = pkgs.callPackage ./serverconfig.nix { vintagestory = pkg; };
   defcon = builtins.fromJSON (builtins.readFile "${gendef}/serverconfig.json");
   # https://wiki.vintagestory.at/Server_Config
-  config = defcon // {
+  config = lib.recursiveUpdate defcon {
+    ModPaths = defcon.ModPaths ++ [ modPath ];
     StartupCommands = "/op Greaka";
     WorldConfig.WorldType = "wildernesssurvival";
-    WorldConfig.SaveFileLocation = "${datapath}/Saves/hindsight.vcdbs";
+    WorldConfig.SaveFileLocation = "${dataPath}/Saves/hindsight.vcdbs";
     AdvertiseServer = false;
     WhitelistMode = "off";
     DieAboveMemoryUsageMb = 6000;
@@ -68,10 +70,10 @@ in
       StateDirectory = stateDirName;
       ExecStart = "${pkgs.writeScriptBin "vintagestory.sh" ''
         #!/bin/sh
-        rm -rf ${datapath}/Mods
-        ln -fs ${localModPath} ${datapath}/Mods
-        ln -fs ${configFile} ${datapath}/serverconfig.json
-        ${pkg}/bin/vintagestory-server --dataPath ${datapath}
+        rm -rf ${modPath}
+        ln -fs ${localModPath} ${modPath}
+        ln -fs ${configFile} ${dataPath}/serverconfig.json
+        ${pkg}/bin/vintagestory-server --dataPath ${dataPath}
       ''}/bin/vintagestory.sh";
     };
   };
@@ -80,5 +82,5 @@ in
 
   alerts = [ "vintagestory" ];
   # It got too big
-  # backups = [ "${datapath}/Saves/*" ];
+  # backups = [ "${dataPath}/Saves/*" ];
 }
