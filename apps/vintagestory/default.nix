@@ -1,5 +1,11 @@
-{ lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
+  # todo: factorio style mods
   localModPath = /home/greaka/.config/VintagestoryData/Mods;
   stateDirName = "vintagestory";
   dataPath = "/var/lib/${stateDirName}";
@@ -8,8 +14,9 @@ let
   gendef = pkgs.callPackage ./serverconfig.nix { vintagestory = pkg; };
   defcon = builtins.fromJSON (builtins.readFile "${gendef}/serverconfig.json");
   # https://wiki.vintagestory.at/Server_Config
-  config = lib.recursiveUpdate defcon {
+  cfg = lib.recursiveUpdate defcon {
     ModPaths = defcon.ModPaths ++ [ modPath ];
+    VerifyPlayerAuth = config.hetzner.ipv4 != null;
     StartupCommands = "/op Greaka";
     WorldConfig.WorldType = "wildernesssurvival";
     WorldConfig.SaveFileLocation = "${dataPath}/Saves/hindsight.vcdbs";
@@ -17,7 +24,7 @@ let
     WhitelistMode = "off";
     DieAboveMemoryUsageMb = 6000;
   };
-  configFile = builtins.toFile "serverconfig.json" (builtins.toJSON config);
+  configFile = builtins.toFile "serverconfig.json" (builtins.toJSON cfg);
   pkg =
     with pkgs;
     (
@@ -42,11 +49,11 @@ let
             done
           '';
 
-          version = "1.20.1";
+          version = "1.20.3";
 
           src = fetchurl {
             url = "https://cdn.vintagestory.at/gamefiles/stable/vs_client_linux-x64_${final.version}.tar.gz";
-            hash = "sha256-FXguajZ/sKDbUEwkwnjBJcpz5jcM1rrVzqTLXn6TS1M=";
+            hash = "sha256-+nEyFlLfTAOmd8HrngZOD1rReaXCXX/ficE/PCLcewg=";
           };
         }
       )).override
@@ -78,7 +85,8 @@ in
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ config.Port ];
+  networking.firewall.allowedTCPPorts = [ cfg.Port ];
+  networking.firewall.allowedUDPPorts = [ cfg.Port ];
 
   alerts = [ "vintagestory" ];
   # It got too big

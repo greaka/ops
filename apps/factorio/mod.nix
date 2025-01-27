@@ -26,7 +26,13 @@ stdenv.mkDerivation {
     url = "${baseUrl}${release.download_url}?username=${username}&token=${token}";
     sha1 = release.sha1;
   };
-  preferLocalBuild = true;
+
+  # to avoid sending auth stuff to the remote machine
+  # preferLocalBuild = true;
+
+  # to build this derivation on the remote machine
+  allowSubstitutes = false;
+
   buildCommand = ''
     mkdir -p $out
     ln -s $src $out/${release.file_name}

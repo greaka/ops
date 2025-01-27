@@ -7,6 +7,12 @@
   name,
   ...
 }:
+let
+  ipv4 = config.hetzner.ipv4 != null;
+  ipv6 = config.hetzner.ipv6 != null;
+  gateway4 = lib.optionalString ipv4 "172.31.1.1";
+  gateway6 = lib.optionalString ipv6 "fe80::1";
+in
 {
   imports = [
     <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
@@ -22,18 +28,6 @@
     };
   };
 
-  fileSystems = {
-    "/" = {
-      device = "/dev/sda2";
-      fsType = "ext4";
-    };
-
-    "/boot" = {
-      device = "/dev/sda1";
-      fsType = "ext2";
-    };
-  };
-
   swapDevices = [
     {
       device = "/swap";
@@ -43,43 +37,51 @@
 
   networking = {
     hostName = name;
-    nameservers = [
-      "213.133.98.98"
-      "213.133.99.99"
-      "213.133.100.100"
-    ];
+    nameservers =
+      (lib.optionals ipv4 [
+        "185.12.64.1"
+        "185.12.64.2"
+      ])
+      ++ (lib.optionals ipv6 [
+        "2a01:4ff:ff00::add:1"
+        "2a01:4ff:ff00::add:2"
+      ]);
 
     useDHCP = false;
 
     defaultGateway = {
-      address = "172.31.1.1";
-      interface = "enp1s0";
+      address = gateway4;
+      interface = config.hetzner.interface;
     };
 
     defaultGateway6 = {
-      address = "fe80::1";
-      interface = "enp1s0";
+      address = gateway6;
+      interface = config.hetzner.interface;
     };
 
-    interfaces.enp1s0 = {
+    interfaces."${config.hetzner.interface}" = {
       useDHCP = false;
 
-      ipv4.addresses = [
-        {
-          address = config.hetzner.ipv4;
-          prefixLength = 32;
-        }
-      ];
+      ipv4 = {
+        addresses = lib.optionals ipv4 [
+          {
+            address = config.hetzner.ipv4;
+            prefixLength = 32;
+          }
+        ];
+      };
 
-      ipv6.addresses = [
-        {
-          address = config.hetzner.ipv6;
-          prefixLength = 64;
-        }
-      ];
+      ipv6 = {
+        addresses = lib.optionals ipv6 [
+          {
+            address = config.hetzner.ipv6;
+            prefixLength = 64;
+          }
+        ];
+      };
     };
 
-    nat.externalInterface = "enp1s0";
+    nat.externalInterface = config.hetzner.interface;
   };
 
   deployment.targetHost = name;

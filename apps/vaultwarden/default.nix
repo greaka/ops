@@ -12,8 +12,8 @@ in
     vaultwarden = {
       enable = true;
 
-      package = pkg;
-      webVaultPackage = webVaultPkg;
+      #package = pkg;
+      #webVaultPackage = webVaultPkg;
 
       backupDir = backupDir;
 

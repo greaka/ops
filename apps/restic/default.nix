@@ -1,9 +1,14 @@
-{ config, lib, ... }:
+{
+  name,
+  config,
+  lib,
+  ...
+}:
 {
   imports = [ ./options.nix ];
 
   services.restic.backups.backblaze = {
-    repository = "b2:greaka-kenma:/backups/backblaze";
+    repository = "b2:greaka-${name}:/backups/backblaze";
     paths = config.backups;
     initialize = true;
     passwordFile = "/run/keys/restic";
