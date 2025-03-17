@@ -49,11 +49,11 @@ let
             done
           '';
 
-          version = "1.20.3";
+          version = "1.20.4";
 
           src = fetchurl {
             url = "https://cdn.vintagestory.at/gamefiles/stable/vs_client_linux-x64_${final.version}.tar.gz";
-            hash = "sha256-+nEyFlLfTAOmd8HrngZOD1rReaXCXX/ficE/PCLcewg=";
+            hash = "sha256-Hgp2u/y2uPnJhAmPpwof76/woFGz4ISUXU+FIRMjMuQ=";
           };
         }
       )).override
