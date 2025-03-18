@@ -11,6 +11,7 @@
   };
 
   keys."acme-cloudflare" = {
+    services = [ "acme-setup" ];
     group = "acme";
     permissions = "0440";
   };

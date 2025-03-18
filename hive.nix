@@ -18,13 +18,13 @@
       imports = [
         ./apps/factorio
         # ./apps/terraria
-        # ./apps/vintagestory
+        ./apps/vintagestory
         # ./apps/github-runner
         ./apps/ovenmediaengine
         # ./apps/paperless
         ./apps/atuin
         ./apps/plikd
-        ./apps/matrix
+        # ./apps/matrix
         ./apps/vaultwarden
         ./apps/wireguard
         # ./apps/wvwbot
@@ -32,9 +32,9 @@
       ];
     };
 
-  vintage =
-    { ... }:
-    {
-      imports = [ ./apps/vintagestory ];
-    };
+  # vintage =
+  #   { ... }:
+  #   {
+  #     imports = [ ./apps/vintagestory ];
+  #   };
 }
