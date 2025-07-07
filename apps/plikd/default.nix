@@ -39,5 +39,5 @@
   services.nginx.clientMaxBodySize = "10G";
 
   alerts = [ "plikd" ];
-  # backups = [ "/var/lib/plikd" ];
+  backups = [ "/var/lib/plikd" ];
 }

@@ -1,9 +1,9 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   secret = "telegram-alerts-token";
   script = pkgs.writeScriptBin "notify-telegram" ''
     #!${pkgs.stdenv.shell}
-    ${pkgs.curl}/bin/curl -X POST --silent --output /dev/null https://api.telegram.org/bot$(cat /run/keys/${secret})/sendMessage -d chat_id=121591954 -d text="$2: $1"
+    ${pkgs.curl}/bin/curl -X POST --silent --output /dev/null https://api.telegram.org/bot$(cat ${config.keys."${secret}".path})/sendMessage -d chat_id=121591954 -d text="$2: $1"
   '';
 in
 {

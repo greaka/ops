@@ -2,7 +2,7 @@
 {
   services.paperless = {
     enable = true;
-    passwordFile = "/run/keys/paperless";
+    passwordFile = config.keys.paperless.path;
     extraConfig = {
       PAPERLESS_OCR_LANGUAGE = "deu+eng";
       PAPERLESS_OCR_MODE = "skip_noarchive";

@@ -4,7 +4,7 @@ with lib;
 {
   options.keys = mkOption {
     type = types.attrsOf (
-      types.submodule ({
+      types.submodule (input: {
         options = {
           services = mkOption {
             type = types.listOf types.str;
@@ -21,6 +21,10 @@ with lib;
           permissions = mkOption {
             type = types.str;
             default = "0400";
+          };
+          path = mkOption {
+            type = types.str;
+            default = config.deployment.keys."${input.config._module.args.name}".path;
           };
         };
       })

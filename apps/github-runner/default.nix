@@ -4,7 +4,7 @@
     enable = true;
     url = "https://github.com/greaka/gw2api";
     replace = true;
-    tokenFile = "/run/keys/github-runner";
+    tokenFile = config.keys.github-runner.path;
     package = pkgs.github-runner.override { withNode12 = true; };
     extraPackages = with pkgs; [
       cargo

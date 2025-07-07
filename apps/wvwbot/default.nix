@@ -59,7 +59,7 @@ in
     serviceConfig = {
       User = "wvwbot";
       Restart = "always";
-      EnvironmentFile = "/run/keys/wvwbot";
+      EnvironmentFile = config.keys.wvwbot.path;
       # WorkingDirectory = "/etc/wvwbot";
       ExecStart = "${pkg}/bin/wvwbot";
       #RuntimeMaxSec = 86400;

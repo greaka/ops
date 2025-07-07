@@ -21,7 +21,7 @@ in
                 url = "https://prometheus-prod-01-eu-west-0.grafana.net/api/prom/push";
                 basic_auth = {
                   username = 785788;
-                  password_file = "/run/keys/${secret}";
+                  password_file = config.keys."${secret}".path;
                 };
               }
             ];
@@ -38,7 +38,7 @@ in
                 endpoint = "tempo-eu-west-0.grafana.net:443";
                 basic_auth = {
                   username = 388376;
-                  password_file = "/run/keys/${secret}";
+                  password_file = config.keys."${secret}".path;
                 };
               }
             ];

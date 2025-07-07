@@ -10,13 +10,13 @@ in
       let
         module = fetchTarball {
           name = "source";
-          url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0.tar.gz";
-          sha256 = "sha256:1gzrpdv2p74is4mjmi4kkmm4ycf74mpsm6ppmxwk9laz39qfphk0";
+          url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.2-1.tar.gz";
+          sha256 = "sha256-SXUAlxpjPRkArRMHy5+Hdi+PiC+ND9yzzIjiaHmTvQU=";
         };
         lixSrc = fetchTarball {
           name = "source";
-          url = "https://git.lix.systems/lix-project/lix/archive/2.92.0.tar.gz";
-          sha256 = "sha256-CCKIAE84dzkrnlxJCKFyffAxP3yfsOAbdvydUGqq24g=";
+          url = "https://git.lix.systems/lix-project/lix/archive/2.93.2.tar.gz";
+          sha256 = "sha256-J4ycLoXHPsoBoQtEXFCelL4xlq5pT8U9tNWNKm43+YI=";
         };
       in
       # This is the core of the code you need; it is an exercise to the

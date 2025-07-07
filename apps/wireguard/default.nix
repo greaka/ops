@@ -41,7 +41,7 @@ in
           ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${ip_prefix}.0/24 -o ${config.networking.nat.externalInterface} -j MASQUERADE
         '';
 
-        privateKeyFile = "/run/keys/wg";
+        privateKeyFile = config.keys.wg.path;
 
         peers = [
           {

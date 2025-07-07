@@ -89,6 +89,5 @@ in
   networking.firewall.allowedUDPPorts = [ cfg.Port ];
 
   alerts = [ "vintagestory" ];
-  # It got too big
-  # backups = [ "${dataPath}/Saves/*" ];
+  backups = [ "${dataPath}/Saves" ];
 }

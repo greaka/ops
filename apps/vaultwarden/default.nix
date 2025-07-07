@@ -25,7 +25,7 @@ in
         signupsAllowed = false;
       };
 
-      environmentFile = "/run/keys/vaultwarden";
+      environmentFile = config.keys.vaultwarden.path;
     };
 
     nginx.virtualHosts."${fullDomain}" = {

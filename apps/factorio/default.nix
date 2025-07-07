@@ -12,8 +12,8 @@ let
       pinnedPkgs = hostPkgs.fetchFromGitHub {
         owner = "NixOS";
         repo = "nixpkgs";
-        rev = "aa2922b69f0245008d93e9edf9f34894db724d89";
-        sha256 = "sha256-eN2upWorJV8EApweOZD9dTy3Y9gN59AbBRLsuTyZwd8=";
+        rev = "1a73b1445c0fe7b5af7bac591a94d0d7115c70f2";
+        sha256 = "sha256-Zo2FQiOqN0e3M/OExsam0mwRAbDtWoDasjFv1JvaF/8=";
       };
     in
     import pinnedPkgs { config.allowUnfree = true; }
