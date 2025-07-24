@@ -1,4 +1,8 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 let
   secret = "telegram-alerts-token";
   script = pkgs.writeScriptBin "notify-telegram" ''

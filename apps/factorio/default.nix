@@ -1,19 +1,15 @@
 {
-  config,
-  lib,
   pkgs,
   ...
 }:
-#let pkgs = import <nixos-master> { config.allowUnfree = true; };
 let
   pinned = (
     let
-      hostPkgs = import <nixpkgs> { };
-      pinnedPkgs = hostPkgs.fetchFromGitHub {
-        owner = "NixOS";
+      pinnedPkgs = pkgs.fetchFromGitHub {
+        owner = "greaka";
         repo = "nixpkgs";
-        rev = "1a73b1445c0fe7b5af7bac591a94d0d7115c70f2";
-        sha256 = "sha256-Zo2FQiOqN0e3M/OExsam0mwRAbDtWoDasjFv1JvaF/8=";
+        rev = "4544964802e749d1da42c92347906e2dea25524c";
+        sha256 = "sha256-vO01kIzJt11Avh7mu28A/PQHyPa3dWITUrztyIQgwDk=";
       };
     in
     import pinnedPkgs { config.allowUnfree = true; }

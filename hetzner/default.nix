@@ -4,6 +4,7 @@
 {
   config,
   lib,
+  modulesPath,
   name,
   ...
 }:
@@ -15,7 +16,7 @@ let
 in
 {
   imports = [
-    <nixpkgs/nixos/modules/profiles/qemu-guest.nix>
+    "${modulesPath}/profiles/qemu-guest.nix"
     ./options.nix
   ];
 

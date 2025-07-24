@@ -4,17 +4,6 @@
   pkgs,
   ...
 }:
-let
-  pkg =
-    (import (
-      pkgs.fetchFromGitLab {
-        owner = "famedly";
-        repo = "conduit";
-        rev = "b11855e7a1fc00074a13f9d1b9ab04462931332f";
-        sha256 = "sha256-hqjRGQIBmiWpQPhvix8L5rcxeuJ2z0KZS6A6RbmTB/o=";
-      }
-    )).outputs.packages.x86_64-linux.default;
-in
 {
   services.matrix-conduit = {
     enable = true;
